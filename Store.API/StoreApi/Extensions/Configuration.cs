@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.CookiePolicy;
 using Store.API.Common.Profiles;
 using Store.API.Common.Validation.FluentValidation;
 using Store.API.Presentation.Controllers;
+using Store.API.Presentation.Filters.ActionFilter;
 
 namespace Store.API.StoreApi.Extensions;
 
@@ -10,7 +11,8 @@ public static class Configuration
 {
     public static void ConfigurationBuilderService(this IServiceCollection service)
     {
-        service.AddControllers().AddApplicationPart(typeof(UserController).Assembly);
+        service.AddControllers()
+        .AddApplicationPart(typeof(UserController).Assembly);
         service.AddValidatorsFromAssembly(typeof(UserCreateValidator).Assembly);
         
         service.AddSwaggerGen();

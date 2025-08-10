@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Mvc;
 using Store.API.Application.Services.Interfaces;
 using Store.API.Common.Dtos.UserDtos;
 using Store.API.Infrastructure.Pagination;
+using Store.API.Presentation.Filters.ActionFilter;
 
 namespace Store.API.Presentation.Controllers;
 
@@ -31,24 +32,22 @@ public class UserController : ControllerBase
         ));
         return Ok(userPagination.Entities);
     }
+    [ServiceFilter(typeof(ExceptionControllerActionFilter))]
     [HttpPost]
-    public async Task<IActionResult> PostUser([FromBody] UserAddDto _addDto)
+    public IActionResult PostUser([FromBody] UserAddDto _addDto)
     {
-        var userResult = await _userManager.UserCreateValidation(_addDto);
-        if (userResult.isValid)
-        {
-            return Ok();
-        }
-        else return BadRequest(userResult.ErrorMessages);
+        return Ok();
     }
+    [ServiceFilter(typeof(ExceptionControllerActionFilter))]
     [HttpPut]
-    public async Task<IActionResult> PostPut(UserUpdateDto _update)
+    public IActionResult PostPut(UserUpdateDto _update)
     {
-        var result = await _userManager.UserUpdateValidation(_update);
-        if (result.isValid)
-        {
-            return Ok();
-        }
-        return BadRequest(result.ErrorMessages);
+        return Ok();
+    }
+    [HttpGet("{id}")]
+    public async Task<IActionResult> GetUser(int id)
+    {
+        var user = await _userManager.GetEntityById(id);
+        return Ok(user);
     }
 }

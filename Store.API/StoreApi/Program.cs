@@ -9,7 +9,7 @@ builder.Services.ConfigurationBuilderService();
 
 var app = builder.Build();
 app.UseHttpsRedirection();
-
+app.MiddlewareService();
 if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();

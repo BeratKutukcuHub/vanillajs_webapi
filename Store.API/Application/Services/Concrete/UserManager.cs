@@ -42,27 +42,38 @@ public class UserManager : ServiceManager<UserGetDto, UserAddDto, UserUpdateDto,
                 var last = updateDto.LastName.Trim();
                 var userN = updateDto.UserName.Trim();
             return (
-            !string.IsNullOrWhiteSpace(updateDto.FirstName)? char.ToUpper(first[0]) + first.Substring(1).ToLower() : "",
-            !string.IsNullOrWhiteSpace(updateDto.LastName)? char.ToUpper(last[0]) + last.Substring(1).ToLower() : "",
-            !string.IsNullOrWhiteSpace(updateDto.UserName)? char.ToUpper(userN[0]) + userN.Substring(1).ToLower() : ""
+            !string.IsNullOrWhiteSpace(updateDto.FirstName)?
+            char.ToUpper(first[0]) + first.Substring(1).ToLower() : "",
+            !string.IsNullOrWhiteSpace(updateDto.LastName)?
+            char.ToUpper(last[0]) + last.Substring(1).ToLower() : "",
+            !string.IsNullOrWhiteSpace(updateDto.UserName)?
+            char.ToUpper(userN[0]) + userN.Substring(1).ToLower() : ""
             );
         }
     }
     public async Task<ValidationResultHandler> UserCreateValidation(UserAddDto _addUser)
     {
         var formatUser = Format(_addUser);
-        _addUser.FirstName = formatUser.firstName;
-        _addUser.LastName = formatUser.lastName;
-        _addUser.UserName = formatUser.userName;
-        return await EntityAdd(_addUser);
+        var user = _mapper.Map<User>(_addUser);
+        
+        user.FirstName = formatUser.firstName;
+        user.LastName = formatUser.lastName;
+        user.UserName = formatUser.userName;
+        var addUser = _mapper.Map<UserAddDto>(user);
+        return await EntityAdd(addUser);
     }
 
     public async Task<ValidationResultHandler> UserUpdateValidation(UserUpdateDto _updateUser)
     {
         var formatList = Format(_updateUser);
-        _updateUser.FirstName = !string.IsNullOrWhiteSpace(formatList.firstName) ? formatList.firstName : null;
-        _updateUser.LastName = !string.IsNullOrWhiteSpace(formatList.lastName) ? formatList.lastName : null;
-        _updateUser.UserName = !string.IsNullOrWhiteSpace(formatList.userName) ? formatList.userName : null;
-        return await EntityUpdateByNewEntity(_updateUser);
+        var user = _mapper.Map<User>(_updateUser);
+        user.FirstName = !string.IsNullOrWhiteSpace(formatList.firstName)
+         ? formatList.firstName : null;
+        user.LastName = !string.IsNullOrWhiteSpace(formatList.lastName)
+         ? formatList.lastName : null;
+        user.UserName = !string.IsNullOrWhiteSpace(formatList.userName)
+         ? formatList.userName : null;
+        var updateDto = _mapper.Map<UserUpdateDto>(user);
+        return await EntityUpdateByNewEntity(updateDto);
     }
 }
