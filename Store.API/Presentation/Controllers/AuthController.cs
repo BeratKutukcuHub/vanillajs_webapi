@@ -30,6 +30,6 @@ public class AuthController : ControllerBase
         if (!signupResult.isValid)
         return BadRequest(signupResult.ErrorMessages);
         await _userManager.SignRegister(_data);
-        return Ok("Kayıt başarılı");
+        return Ok("User created successfully with the given information.");
     }
 }

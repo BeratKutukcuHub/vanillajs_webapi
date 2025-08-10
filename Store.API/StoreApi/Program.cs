@@ -2,7 +2,7 @@
 using Store.API.StoreApi.Extensions;
 
 var builder = WebApplication.CreateBuilder(args);
-
+builder.SerilogService();
 builder.Services.LayeredService();
 builder.Services.ConfigurationBuilderService(builder.Configuration);
 
@@ -15,10 +15,7 @@ if (app.Environment.IsDevelopment())
     app.UseSwagger();
     app.UseSwaggerUI();
 }
-if (app.Environment.IsProduction())
-{
 app.MiddlewareService();
-}
 
 app.ConfigurationAppService();
 app.MapControllers();

@@ -4,6 +4,7 @@ using System.Text;
 using AutoMapper;
 using FluentValidation;
 using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.Logging;
 using Microsoft.IdentityModel.Tokens;
 using Store.API.Application.Extension;
 using Store.API.Application.Services.Interfaces;
@@ -11,6 +12,7 @@ using Store.API.Application.Utilities;
 using Store.API.Common.Dtos;
 using Store.API.Common.Dtos.UserDtos;
 using Store.API.Common.Exceptions;
+using Store.API.Common.Serilog;
 using Store.API.Common.ValidationHandler;
 using Store.API.Domain;
 using Store.API.Infrastructure.Repositories;
@@ -25,8 +27,10 @@ public class UserManager : ServiceManager<UserGetDto, UserAddDto, UserUpdateDto,
     private readonly IConfiguration _config;
     private readonly IUserRepository _userRepository;
     public UserManager(IRepositoryBase<User> repositoryBase, IMapper mapper, IValidator<UserAddDto> validator,
-    IValidator<UserUpdateDto> _validator, IValidator<SignupDto> validatorSignup, FormatUtility format, IUserRepository userRepository, IConfiguration config)
-    : base(repositoryBase, mapper, validator, _validator, validatorSignup)
+    IValidator<UserUpdateDto> _validator, IValidator<SignupDto> validatorSignup, FormatUtility format,
+    IUserRepository userRepository, IConfiguration config,
+     SerilogILogger<ServiceManager<UserGetDto, UserAddDto, UserUpdateDto, User>> logger)
+    : base(repositoryBase, mapper, validator, _validator, validatorSignup,logger)
     {
         _format = format;
         _userRepository = userRepository;
@@ -93,6 +97,7 @@ public class UserManager : ServiceManager<UserGetDto, UserAddDto, UserUpdateDto,
         {
             var usergetDto = _mapper.Map<UserGetDto>(user.user);
             string token = new JwtSecurityTokenHandler().WriteToken(JwtCreate(usergetDto));
+            _logger.SerilogInformation("A user logged in.");
             return new TokenDto
             {
                 User = usergetDto,
@@ -100,6 +105,7 @@ public class UserManager : ServiceManager<UserGetDto, UserAddDto, UserUpdateDto,
                 Token = token
             };
         }
+        _logger.SerilogWarning("Login failed, no such user found.");
         await _userRepository.SaveChangesAsync();
         throw new UserNotFound();
     }
@@ -118,6 +124,7 @@ public class UserManager : ServiceManager<UserGetDto, UserAddDto, UserUpdateDto,
         user.LastName = data.lastName;
         user.UserName = data.userName;
         user.Password = HashPasswordGenerate.HashPassword(user.Password);
+        _logger.SerilogInformation("A new user has registered.");
         await _userRepository.Add(user);
     }
     

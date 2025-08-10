@@ -1,9 +1,11 @@
 using System.Text.Json;
 using Store.API.Common.Exceptions;
+using Store.API.Common.Serilog;
 
 public class GlobalExceptionHandler
 {
-    private static async Task ResponseException(Exception _ex, HttpContext _context)
+    private SerilogILogger<GlobalExceptionHandler> _logger;
+    private async Task ResponseException(Exception _ex, HttpContext _context)
     {
         _context.Response.ContentType = "application/json";
         _context.Response.StatusCode = _ex switch
@@ -14,18 +16,21 @@ public class GlobalExceptionHandler
             UserNotFound => StatusCodes.Status400BadRequest,
             _ => StatusCodes.Status500InternalServerError
         };
+        
         var result = new
         {
             message = _ex.Message,
             type = _ex.GetType().Name,
             statusCode = _context.Response.StatusCode
         };
-        await _context.Response.WriteAsync(JsonSerializer.Serialize(result));
+        _logger.SerilogError(JsonSerializer.Serialize(result));
+        await _context.Response.WriteAsync(result.message);
     }
     private RequestDelegate _next;
-    public GlobalExceptionHandler(RequestDelegate next)
+    public GlobalExceptionHandler(RequestDelegate next, SerilogILogger<GlobalExceptionHandler> logger)
     {
         _next = next;
+        _logger = logger;
     }
     public async Task InvokeAsync(HttpContext _context)
     {

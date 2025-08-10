@@ -1,11 +1,8 @@
 using FluentValidation;
-using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.CookiePolicy;
-using Microsoft.IdentityModel.Tokens;
 using Store.API.Common.Profiles;
 using Store.API.Common.Validation.FluentValidation;
 using Store.API.Presentation.Controllers;
-using Store.API.Presentation.Filters.ActionFilter;
 
 namespace Store.API.StoreApi.Extensions;
 
@@ -33,10 +30,6 @@ public static class Configuration
         service.AddAutoMapper(config =>
         {
             config.AddProfile(typeof(UserProfile));
-        });
-        service.AddLogging(config =>
-        {
-            config.AddConsole();
         });
         service.AddCookiePolicy(configuration =>
         {
