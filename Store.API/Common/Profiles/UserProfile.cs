@@ -1,4 +1,5 @@
 using AutoMapper;
+using Store.API.Common.Dtos;
 using Store.API.Common.Dtos.UserDtos;
 using Store.API.Domain;
 
@@ -11,5 +12,7 @@ public class UserProfile : Profile
         CreateMap<User, UserGetDto>().ReverseMap();
         CreateMap<User, UserUpdateDto>().ReverseMap();
         CreateMap<User, UserAddDto>().ReverseMap();
+        CreateMap<User, SigninDto>().ReverseMap();
+        CreateMap<User, SignupDto>().ReverseMap();
     }
 }

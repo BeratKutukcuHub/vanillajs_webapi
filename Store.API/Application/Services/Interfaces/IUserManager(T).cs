@@ -1,3 +1,4 @@
+using Store.API.Common.Dtos;
 using Store.API.Common.Dtos.UserDtos;
 using Store.API.Common.ValidationHandler;
 using Store.API.Domain;
@@ -8,4 +9,7 @@ public interface IUserManager : IServiceManager<UserGetDto, UserAddDto, UserUpda
 {
     Task<ValidationResultHandler> UserCreateValidation(UserAddDto _addUser);
     Task<ValidationResultHandler> UserUpdateValidation(UserUpdateDto _updateUser);
+    Task<TokenDto> SigninCredantials(SigninDto signinData);
+    Task<ValidationResultHandler> SignupValidation(SignupDto _data);
+    Task SignRegister(SignupDto dto);
 }

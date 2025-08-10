@@ -2,6 +2,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\domain\Entity.csproj" />
+    <ProjectReference Include="..\common\Common.csproj" />
   </ItemGroup>
 
   <PropertyGroup>

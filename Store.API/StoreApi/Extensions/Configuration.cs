@@ -1,5 +1,7 @@
 using FluentValidation;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.CookiePolicy;
+using Microsoft.IdentityModel.Tokens;
 using Store.API.Common.Profiles;
 using Store.API.Common.Validation.FluentValidation;
 using Store.API.Presentation.Controllers;
@@ -9,15 +11,16 @@ namespace Store.API.StoreApi.Extensions;
 
 public static class Configuration
 {
-    public static void ConfigurationBuilderService(this IServiceCollection service)
+    public static void ConfigurationBuilderService(this IServiceCollection service, IConfiguration _config)
     {
         service.AddControllers()
         .AddApplicationPart(typeof(UserController).Assembly);
         service.AddValidatorsFromAssembly(typeof(UserCreateValidator).Assembly);
         
         service.AddSwaggerGen();
+
+        service.JwtConfigurationHandler(_config);
         
-        service.AddAuthentication();
         service.AddAuthorization();
         service.AddCors(action => action.AddPolicy("Cors",policy =>
         {
@@ -44,9 +47,10 @@ public static class Configuration
     }
     public static void ConfigurationAppService(this IApplicationBuilder app)
     {
+        app.UseRouting();
         app.UseAuthentication();
         app.UseAuthorization();
-        app.UseRouting();
+        
         app.UseCookiePolicy(new CookiePolicyOptions()
         {
             HttpOnly = HttpOnlyPolicy.Always,

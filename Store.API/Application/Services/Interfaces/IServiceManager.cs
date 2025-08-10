@@ -13,7 +13,7 @@ where Dto : BaseIdEntity
     Task<IEnumerable<GetDto>> GetEntitiesValue();
     Task EntityRemoveById(int Id);
     Task EntityRemoveByEntityValue(GetDto entity);
-    Task<ValidationResultHandler> EntityUpdateByNewEntity(UpdateDto entity);
-    Task<ValidationResultHandler> EntityAdd(AddDto entity);
+    Task EntityUpdateByNewEntity(UpdateDto entity);
+    Task EntityAdd(AddDto entity);
     Task<PaginationMetaData<GetDto>> GetEntitiesPagination(PaginationUI paginationUI);
 }

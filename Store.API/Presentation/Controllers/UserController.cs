@@ -1,4 +1,5 @@
 using System.Text.Json;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Store.API.Application.Services.Interfaces;
@@ -34,17 +35,22 @@ public class UserController : ControllerBase
     }
     [ServiceFilter(typeof(ExceptionControllerActionFilter))]
     [HttpPost]
-    public IActionResult PostUser([FromBody] UserAddDto _addDto)
+    [Authorize]
+    public async Task<IActionResult> PostUserAsync([FromBody] UserAddDto _addDto)
     {
+        await _userManager.EntityAdd(_addDto);
         return Ok();
     }
     [ServiceFilter(typeof(ExceptionControllerActionFilter))]
     [HttpPut]
-    public IActionResult PostPut(UserUpdateDto _update)
+    [Authorize]
+    public async Task<IActionResult> PutUserAsync(UserUpdateDto _update)
     {
+        await _userManager.EntityUpdateByNewEntity(_update);
         return Ok();
     }
     [HttpGet("{id}")]
+    [Authorize]
     public async Task<IActionResult> GetUser(int id)
     {
         var user = await _userManager.GetEntityById(id);

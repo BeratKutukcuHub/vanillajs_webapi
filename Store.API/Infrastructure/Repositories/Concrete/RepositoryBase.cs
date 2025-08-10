@@ -12,7 +12,9 @@ public class RepositoryBase<T> : IRepositoryBase<T> where T : BaseIdEntity, new(
     public async Task Add(T entity)
     {
         await Task.Delay(100);
-        entity.Id = _database.Count;
+        entity.Id = _database.Count == 0 
+        ? 1 
+        : _database.Max(x => x.Id) + 1;
         ListDbContext<T>.Database.Add(entity);
     }
     public async Task<T> GetValue(int Id)

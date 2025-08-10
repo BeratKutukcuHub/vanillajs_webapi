@@ -4,16 +4,20 @@ using Store.API.StoreApi.Extensions;
 var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.LayeredService();
-builder.Services.ConfigurationBuilderService();
+builder.Services.ConfigurationBuilderService(builder.Configuration);
 
 
 var app = builder.Build();
 app.UseHttpsRedirection();
-app.MiddlewareService();
+
 if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
     app.UseSwaggerUI();
+}
+if (app.Environment.IsProduction())
+{
+app.MiddlewareService();
 }
 
 app.ConfigurationAppService();

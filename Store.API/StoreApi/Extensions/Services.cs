@@ -1,5 +1,6 @@
 using Store.API.Application.Services.Concrete;
 using Store.API.Application.Services.Interfaces;
+using Store.API.Application.Utilities;
 using Store.API.Infrastructure.Data;
 using Store.API.Infrastructure.Repositories;
 using Store.API.Infrastructure.Repositories.Concrete;
@@ -16,7 +17,7 @@ public static class Services
         services.AddScoped(typeof(ListDbContext<>));
         services.AddScoped(typeof(IRepositoryBase<>), typeof(RepositoryBase<>));
         services.AddScoped(typeof(IUserRepository), typeof(UserRepository));
-
+        services.AddScoped<FormatUtility>();
         services.AddScoped<ExceptionControllerActionFilter>();
     }
 }

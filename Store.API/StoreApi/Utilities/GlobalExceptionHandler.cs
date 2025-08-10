@@ -11,6 +11,7 @@ public class GlobalExceptionHandler
             NonNegativeIndexerException => StatusCodes.Status400BadRequest,
             IndexerException => StatusCodes.Status404NotFound,
             PaginationException => StatusCodes.Status404NotFound,
+            UserNotFound => StatusCodes.Status400BadRequest,
             _ => StatusCodes.Status500InternalServerError
         };
         var result = new
