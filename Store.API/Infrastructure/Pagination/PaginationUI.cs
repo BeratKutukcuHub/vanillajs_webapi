@@ -9,6 +9,7 @@ public class PaginationUI
     get => _pageSize;
     set => _pageSize = value > DefaultPageSize ? DefaultPageSize : value;
     }
-    public int PageNumber { get; set; } = 0;
+    private int _pageNumber = 0;
+    public int PageNumber { get => _pageNumber; set => _pageNumber = value < 0 ? _pageNumber : value; }
     
 }

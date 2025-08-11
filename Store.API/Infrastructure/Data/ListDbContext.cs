@@ -5,7 +5,6 @@ namespace Store.API.Infrastructure.Data;
 public class ListDbContext<T> where T : BaseIdEntity,new()
 {
     public static List<T> Database { get; set; }
-
     static ListDbContext()
     {
         var properties = typeof(T).GetProperties(System.Reflection.BindingFlags.Public
@@ -14,6 +13,7 @@ public class ListDbContext<T> where T : BaseIdEntity,new()
         {
             Database = new();
             Database.SeedDataController<T>(properties);
+            SeedAdmin.AddAdminUserData(Database.Count);
         }
     }
 } 

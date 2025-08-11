@@ -1,7 +1,6 @@
 using Microsoft.AspNetCore.Mvc;
 using Store.API.Application.Services.Interfaces;
 using Store.API.Common.Dtos;
-using Store.API.Domain;
 using Store.API.Presentation.Filters.ActionFilter;
 
 namespace Store.API.Presentation.Controllers;

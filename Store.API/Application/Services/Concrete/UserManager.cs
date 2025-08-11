@@ -3,8 +3,8 @@ using System.Security.Claims;
 using System.Text;
 using AutoMapper;
 using FluentValidation;
+using Microsoft.Extensions.Caching.Memory;
 using Microsoft.Extensions.Configuration;
-using Microsoft.Extensions.Logging;
 using Microsoft.IdentityModel.Tokens;
 using Store.API.Application.Extension;
 using Store.API.Application.Services.Interfaces;
@@ -29,8 +29,8 @@ public class UserManager : ServiceManager<UserGetDto, UserAddDto, UserUpdateDto,
     public UserManager(IRepositoryBase<User> repositoryBase, IMapper mapper, IValidator<UserAddDto> validator,
     IValidator<UserUpdateDto> _validator, IValidator<SignupDto> validatorSignup, FormatUtility format,
     IUserRepository userRepository, IConfiguration config,
-     SerilogILogger<ServiceManager<UserGetDto, UserAddDto, UserUpdateDto, User>> logger)
-    : base(repositoryBase, mapper, validator, _validator, validatorSignup,logger)
+     SerilogILogger<ServiceManager<UserGetDto, UserAddDto, UserUpdateDto, User>> logger,IMemoryCache cache)
+    : base(repositoryBase, mapper, validator, _validator, validatorSignup, logger,cache)
     {
         _format = format;
         _userRepository = userRepository;

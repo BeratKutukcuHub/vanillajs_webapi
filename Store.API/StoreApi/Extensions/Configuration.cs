@@ -12,6 +12,7 @@ public static class Configuration
     {
         service.AddControllers()
         .AddApplicationPart(typeof(UserController).Assembly);
+        service.AddMemoryCache();
         service.AddValidatorsFromAssembly(typeof(UserCreateValidator).Assembly);
         
         service.AddSwaggerGen();

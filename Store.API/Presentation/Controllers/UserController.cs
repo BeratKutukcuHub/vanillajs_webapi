@@ -2,6 +2,7 @@ using System.Text.Json;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Serilog;
 using Store.API.Application.Services.Interfaces;
 using Store.API.Common.Dtos.UserDtos;
 using Store.API.Infrastructure.Pagination;
@@ -35,7 +36,7 @@ public class UserController : ControllerBase
     }
     [ServiceFilter(typeof(ExceptionControllerActionFilter))]
     [HttpPost]
-    [Authorize]
+    [Authorize(Roles = "Admin")]
     public async Task<IActionResult> PostUserAsync([FromBody] UserAddDto _addDto)
     {
         await _userManager.EntityAdd(_addDto);
@@ -43,7 +44,7 @@ public class UserController : ControllerBase
     }
     [ServiceFilter(typeof(ExceptionControllerActionFilter))]
     [HttpPut]
-    [Authorize]
+    [Authorize(Roles = "Admin")]
     public async Task<IActionResult> PutUserAsync(UserUpdateDto _update)
     {
         await _userManager.EntityUpdateByNewEntity(_update);
