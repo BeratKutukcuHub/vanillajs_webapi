@@ -26,14 +26,14 @@ public static class SeedData
         var lastNameRandom = random.Next(0, lastNameEntity.Length);
         string userNameEntity = $"{firstNameEntity[firstNameRandom].Substring(0, 3) + lastNameEntity[lastNameRandom]
         .Substring(0, 4)}";
-        string[] emailEntity = { "@hotmail.com", "@gmail.com", "@outlok.com", };
+        string[] emailEntity = { "@hotmail.com", "@gmail.com", "@outlook.com", };
         string[] emailDetail = { ".", "_", "-", "!", "0", "1", "2", "3", "4", "5", "6", "7", "8", "9" };
         string[] emailTitle = {"Karakartal1903", "Fenerbahceli1907",
             "Ultraslan1905", "Turkiye81",
         "Sivas58", "Ankaralı", "Recaizademahmutekremo"};
-        string emailContent = $"{emailTitle[random.Next(0, emailTitle.Length - 1)] +
-         emailDetail[random.Next(0, emailDetail.Length - 1)] +
-        emailEntity[random.Next(0, emailEntity.Length - 1)]}";
+        string emailContent = $"{emailTitle[random.Next(0, emailTitle.Length)] +
+         emailDetail[random.Next(0, emailDetail.Length)] +
+        emailEntity[random.Next(0, emailEntity.Length)]}";
         int age = random.Next(18,99);
         return (firstNameEntity[firstNameRandom],
         lastNameEntity[lastNameRandom],
