@@ -10,8 +10,8 @@
     "allowJs": false
   },
   "include": [
-    "Home/src/**/*.ts",
-    "Store/src/**/*.ts"
+    "*/*/src/**/*.ts",
+    "*/*/src/**/*.ts"
   ],
   "exclude": [
     "node_modules",
