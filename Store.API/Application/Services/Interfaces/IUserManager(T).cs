@@ -1,3 +1,4 @@
+using System.Security.Claims;
 using Store.API.Common.Dtos;
 using Store.API.Common.Dtos.UserDtos;
 using Store.API.Common.ValidationHandler;
@@ -12,4 +13,5 @@ public interface IUserManager : IServiceManager<UserGetDto, UserAddDto, UserUpda
     Task<TokenDto> SigninCredantials(SigninDto signinData);
     Task<ValidationResultHandler> SignupValidation(SignupDto _data);
     Task SignRegister(SignupDto dto);
+    Task<ClaimsPrincipal> WhoIAm(string Token);
 }

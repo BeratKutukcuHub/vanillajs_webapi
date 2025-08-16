@@ -5,7 +5,7 @@ using Store.API.Infrastructure.Pagination;
 
 namespace Store.API.Application.Services.Interfaces;
 
-public interface IServiceManager<GetDto, AddDto, UpdateDto,Dto>
+public interface IServiceManager<GetDto, AddDto, UpdateDto, Dto>
 where GetDto : BaseGetDto where AddDto : BaseAddDto where UpdateDto : BaseUpdateDto
 where Dto : BaseIdEntity
 {
@@ -16,4 +16,5 @@ where Dto : BaseIdEntity
     Task EntityUpdateByNewEntity(UpdateDto entity);
     Task EntityAdd(AddDto entity);
     Task<PaginationMetaData<GetDto>> GetEntitiesPagination(PaginationUI paginationUI);
+    
 }

@@ -13,7 +13,7 @@ public class GlobalExceptionHandler
             NonNegativeIndexerException => StatusCodes.Status400BadRequest,
             IndexerException => StatusCodes.Status404NotFound,
             PaginationException => StatusCodes.Status404NotFound,
-            UserNotFound => StatusCodes.Status400BadRequest,
+            UserNotFound => StatusCodes.Status404NotFound,
             _ => StatusCodes.Status500InternalServerError
         };
         
@@ -24,7 +24,7 @@ public class GlobalExceptionHandler
             statusCode = _context.Response.StatusCode
         };
         _logger.SerilogError(JsonSerializer.Serialize(result));
-        await _context.Response.WriteAsync(result.message);
+        await _context.Response.WriteAsync(JsonSerializer.Serialize(result));
     }
     private RequestDelegate _next;
     public GlobalExceptionHandler(RequestDelegate next, SerilogILogger<GlobalExceptionHandler> logger)

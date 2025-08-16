@@ -41,8 +41,11 @@ public class RepositoryBase<T> : IRepositoryBase<T> where T : BaseIdEntity, new(
     public async Task Update(T entity)
     {
         await Task.Delay(100);
-        var response = _database.FirstOrDefault(pre => pre.Id == entity.Id);
-        response = entity;
+        var response = _database.FindIndex(pre => pre.Id == entity.Id);
+        if (response != -1)
+        {
+            _database[response] = entity; 
+        }
     }
     public async Task<PaginationMetaData<T>> GetEntities(PaginationUI _pag)
     {

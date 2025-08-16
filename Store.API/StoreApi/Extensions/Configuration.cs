@@ -17,15 +17,17 @@ public static class Configuration
         
         service.AddSwaggerGen();
 
-        service.JwtConfigurationHandler(_config);
-        
-        service.AddAuthorization();
         service.AddCors(action => action.AddPolicy("Cors",policy =>
         {
             policy.AllowAnyHeader();
             policy.AllowAnyMethod();
             policy.AllowAnyOrigin();
+            policy.WithExposedHeaders("x-pagination");
         }));
+
+        service.JwtConfigurationHandler(_config);
+        service.AddAuthorization();
+        
         service.AddEndpointsApiExplorer();
         service.AddHttpContextAccessor();
         service.AddAutoMapper(config =>

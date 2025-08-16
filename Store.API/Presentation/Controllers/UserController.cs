@@ -48,7 +48,7 @@ public class UserController : ControllerBase
     public async Task<IActionResult> PutUserAsync(UserUpdateDto _update)
     {
         await _userManager.EntityUpdateByNewEntity(_update);
-        return Ok();
+        return Ok(new { message = "The user is updated by admin." });
     }
     [HttpGet("{id}")]
     [Authorize]
@@ -56,5 +56,12 @@ public class UserController : ControllerBase
     {
         var user = await _userManager.GetEntityById(id);
         return Ok(user);
+    }
+    [HttpDelete("{id}")]
+    [Authorize]
+    public async Task<IActionResult> DeleteUser(int id)
+    {
+        await _userManager.EntityRemoveById(id);
+        return NoContent();
     }
 }

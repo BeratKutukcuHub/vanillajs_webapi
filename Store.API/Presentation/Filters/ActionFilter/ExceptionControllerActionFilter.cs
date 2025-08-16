@@ -1,4 +1,5 @@
 
+using System.Text.Json;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Filters;
 using Store.API.Application.Services.Interfaces;
@@ -24,7 +25,7 @@ public class ExceptionControllerActionFilter : IAsyncActionFilter
             {
                     context.ModelState.AddModelError(error.Key, error.Value);
             }
-            context.Result = new BadRequestObjectResult(context.ModelState);
+            context.Result = new BadRequestObjectResult(JsonSerializer.Serialize(context.ModelState));
             return false;
         }
         return true;

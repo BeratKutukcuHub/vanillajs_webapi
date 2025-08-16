@@ -2,11 +2,20 @@ body{
     margin: 0px;
     box-sizing: border-box;
 }
+.logout{
+    transition: all 0.5s ease;
+}
+.logout:hover{
+
+    color: red;
+}
 a{
     text-decoration: none;
     color: white;
 }
-
+.nav_logo{
+    text-decoration: none;
+}
 .navbar{
     width: 100%;
     position: fixed;
@@ -43,6 +52,10 @@ a{
     gap: 10%;
     justify-content: flex-end;
 }
+.navbar_item {
+    align-items: center;
+    text-align: center;
+}
 .navbar_detail h1{
     cursor: pointer;
     transition: all 0.8s;
@@ -52,14 +65,13 @@ a{
 }
 
 
-
 .footer{
     position: fixed;
     bottom: 0;
     background-color: greenyellow;
     width: 100%;
-    min-height: 100px;
-    max-height: 115px;
+    min-height: 90px;
+    max-height: 90px;
     align-items: center;
     display: flex;
     justify-content: center;

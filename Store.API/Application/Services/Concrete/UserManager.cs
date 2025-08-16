@@ -77,12 +77,16 @@ public class UserManager : ServiceManager<UserGetDto, UserAddDto, UserUpdateDto,
     }
     private List<Claim> JwtClaims(UserGetDto userGetDto)
     {
+        
         var claim = new List<Claim>()
         {
-            new Claim(ClaimTypes.Name , userGetDto.UserName),
-            new Claim(ClaimTypes.Email, userGetDto.Email),
-            new Claim(ClaimTypes.Anonymous, userGetDto.Id.ToString()),
-            new Claim(ClaimTypes.Country , "Turkey")
+            new Claim(ClaimTypes.Name, userGetDto.UserName ?? ""),
+            new Claim(ClaimTypes.NameIdentifier, userGetDto.Id.ToString()),
+            new Claim(ClaimTypes.Email, userGetDto.Email ?? ""),
+            new Claim(ClaimTypes.Country, "Turkey"),
+            new Claim("firstName" , userGetDto.FirstName?? ""),
+            new Claim("lastName" , userGetDto.LastName?? ""),
+            new Claim("age" , userGetDto.Age.ToString()),
         };
         foreach (var role in userGetDto.Roles)
         {
@@ -127,5 +131,28 @@ public class UserManager : ServiceManager<UserGetDto, UserAddDto, UserUpdateDto,
         _logger.SerilogInformation("A new user has registered.");
         await _userRepository.Add(user);
     }
-    
+
+    public async Task<ClaimsPrincipal> WhoIAm(string Token)
+    {
+        var dataDictionary = _config.GetSection("JwtAuthentication");
+        byte[] secretKkey = Encoding.UTF8.GetBytes(dataDictionary["SecretKey"]);
+        var token = new SymmetricSecurityKey(secretKkey);
+        var tokenHandler = new JwtSecurityTokenHandler();
+        var tokenValidator = new TokenValidationParameters
+        {
+            ValidateIssuerSigningKey = true,
+            ValidateAudience = true,
+            ValidateLifetime = true,
+            IssuerSigningKey = token,
+            ValidIssuer = dataDictionary["Issuer"],
+            ValidAudience = dataDictionary["Audience"],
+        };
+        var tokenSolver = tokenHandler.ValidateToken(Token, tokenValidator, out _);
+        if (tokenSolver is not null)
+        {
+            await _repositoryBase.SaveChangesAsync();
+            return tokenSolver;
+        }
+        throw new NonTokenSolve();
+    }
 }

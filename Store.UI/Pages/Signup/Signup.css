@@ -1,0 +1,123 @@
+.signup_container {
+    border-radius: 10px;
+    width: 70%;
+    max-width: 900px;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background-color: rgba(167, 167, 231, 0.784);
+    margin: auto;
+}
+
+.signup_top {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    align-items: center;
+    text-align: center;
+}
+
+.signup_top h1 {
+    font-size: clamp(1rem, 2vw, 1.3rem);
+    color: rgb(24, 24, 35);
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+    letter-spacing: 1.2px;
+}
+
+.signup_top h4 {
+    font-size: clamp(0.7rem, 1.5vw, 0.9rem);
+    color: rgb(60, 60, 73);
+    font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+    letter-spacing: -0.5px;
+    word-spacing: 2px;
+}
+
+.signup_bottom {
+    width: 100%;
+    margin-top: 5%;
+    display: flex;
+    justify-content: center;
+}
+
+.signup_group {
+    width: 100%;
+    max-width: 500px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.signup_item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+    font-size: 1rem;
+    letter-spacing: -0.6px;
+    color: rgb(60, 60, 73);
+    gap: 10px;
+}
+
+.signup_item input {
+    flex: 1;
+    max-width: 300px;
+    min-width: 150px;
+    border-radius: 5px;
+    padding: 5px;
+    border: none;
+    outline: none;
+    background-color: rgba(44, 44, 115, 0.933);
+    color: white;
+}
+
+.signup_apply {
+    display: flex;
+    justify-content: center;
+    margin-top: 15px;
+}
+
+.signup_button {
+    border-radius: 3px;
+    padding: 10px 20px;
+    background-color: white;
+    color: rgba(44, 44, 115, 0.933);
+    border: none;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0px 5px 0px rgba(128, 128, 128, 0.7);
+}
+
+.signup_button:hover {
+    transform: translateY(2px);
+    box-shadow: 0px 2px 0px rgba(128, 128, 128, 0.7);
+}
+
+/* Orta boyutlu ekranlar */
+@media (max-width: 768px) {
+    .signup_item {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .signup_item input {
+        width: 100%;
+    }
+}
+
+/* Küçük ekranlar */
+@media (max-width: 480px) {
+    .signup_container {
+        width: 90%;
+        padding: 15px;
+    }
+
+    .signup_top h1 {
+        font-size: 1rem;
+    }
+
+    .signup_top h4 {
+        font-size: 0.8rem;
+    }
+}
