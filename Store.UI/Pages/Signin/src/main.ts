@@ -1,3 +1,5 @@
+import { ISignin, User } from "../../../Apis/src/api";
+
 export const Signin = () => {
     return `
     <main class="section_base">
@@ -23,30 +25,7 @@ export const Signin = () => {
 };
 
 
-interface ISignin {
-    userName: string;
-    password: string;
-}
-export interface User {
-    id: number;
-    userName: string;
-    firstName: string;
-    lastName: string;
-    age: number;
-    country:string;
-    email:string,
-    roles: string[];
-}
-export interface UpdateUser {
-    id: number;
-    userName? : string;
-    firstName? : string;
-    lastName? : string;
-    age? : number;
-    country? :string;
-    email? :string,
-    roles? : string[];
-}
+
 
 
 const errorMessage = document.createElement("h4");
@@ -87,7 +66,7 @@ const userInfosErrorHandler = () => {
         }, 2000)
 }
 
-const signinInput = () : ISignin=> {
+const signinInput = () : ISignin => {
     const {userSigninValues} = domElement();
     let signUser : ISignin = { userName: "", password: "" };
     Array.from(userSigninValues).forEach((item : HTMLInputElement , index)=> {

@@ -16,8 +16,6 @@ export const AdminPanel = () => {
         <div class="userlist_buttonGroup"></div>
     </main>`;
 };
-;
-;
 export const FetchNewToken = () => __awaiter(void 0, void 0, void 0, function* () {
     const localUserInformation = LocalStoreUserInfo();
     if (localUserInformation.isFullFilled) {
@@ -110,8 +108,10 @@ const FetchUserGenerate = (...args_1) => __awaiter(void 0, [...args_1], void 0, 
                 "Authorization": `Bearer ${localStore.token}`
             }
         });
-        if (!userInfos.ok)
-            const users = yield userInfos.json();
+        if (!userInfos.ok) {
+            const newToken = yield FetchNewToken();
+        }
+        const users = yield userInfos.json();
         const headerGetPagination = (_a = userInfos.headers.get("x-pagination")) !== null && _a !== void 0 ? _a : "";
         const header = JSON.parse(headerGetPagination);
         const response = {

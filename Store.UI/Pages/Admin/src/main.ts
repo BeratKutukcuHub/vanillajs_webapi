@@ -1,4 +1,5 @@
-import { UpdateUser, User } from "../../Signin/src/main";
+import { Header, PaginationResponse, UpdateUser, User } from "../../../Apis/src/api";
+
 export const AdminPanel = () => {
     return `
     <main class="userlist_container">
@@ -8,18 +9,7 @@ export const AdminPanel = () => {
         <div class="userlist_buttonGroup"></div>
     </main>`;
 }
-interface Header {
-    TotalSize: number,
-    TotalPage : number
-};
-interface PaginationResponse {
-    User : User[],
-    Header : Header,
-};
-interface Response {
-    User : User,
-    isFullFilled : boolean
-}
+
 export const FetchNewToken = async () => {
     const localUserInformation = LocalStoreUserInfo();
     if(localUserInformation.isFullFilled){

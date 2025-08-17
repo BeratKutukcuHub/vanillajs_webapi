@@ -1,5 +1,6 @@
 using System.Security.Claims;
 using System.Text.Json;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Store.API.Application.Services.Interfaces;
 using Store.API.Common.Dtos;
@@ -21,8 +22,7 @@ public class AuthController : ControllerBase
     public async Task<IActionResult> SignIn(SigninDto _data)
     {
         var user = await _userManager.SigninCredantials(_data);
-
-        return Ok(new { token = user.Token });
+        return Ok(new { token = user.Token , refreshToken = user.RefreshTimeResult });
     }
     [ServiceFilter(typeof(ExceptionControllerActionFilter))]
     [HttpPost("Signup")]
@@ -35,6 +35,7 @@ public class AuthController : ControllerBase
         return Ok(new { message = "User created successfully with the given information." });
     }
     [HttpGet("Me")]
+    [Authorize(Roles = "User")]
     public async Task<IActionResult> Me()
     {
         await Task.Delay(100);
@@ -50,5 +51,12 @@ public class AuthController : ControllerBase
             Age = User.FindFirst("age")?.Value
         };
         return Ok(userPrinciple);
+    }
+    [HttpPost("Refresh")]
+    [Authorize(Roles = "User")]
+    public IActionResult RefreshToken(TokenDto tokenDto)
+    {
+        var refresh = _userManager.RefreshToken(tokenDto);
+        return Ok(refresh);
     }
 }

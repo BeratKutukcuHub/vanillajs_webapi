@@ -44,6 +44,7 @@ public static class Configuration
     public static void ConfigurationAppService(this IApplicationBuilder app)
     {
         app.UseRouting();
+        app.UseCors("Cors");
         app.UseAuthentication();
         app.UseAuthorization();
         
@@ -52,6 +53,5 @@ public static class Configuration
             HttpOnly = HttpOnlyPolicy.Always,
             Secure = CookieSecurePolicy.Always,
         });
-        app.UseCors("Cors");
     }
 }

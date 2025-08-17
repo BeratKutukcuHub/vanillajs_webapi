@@ -14,6 +14,7 @@ public class GlobalExceptionHandler
             IndexerException => StatusCodes.Status404NotFound,
             PaginationException => StatusCodes.Status404NotFound,
             UserNotFound => StatusCodes.Status404NotFound,
+            NonRefreshToken => StatusCodes.Status408RequestTimeout,
             _ => StatusCodes.Status500InternalServerError
         };
         

@@ -14,4 +14,5 @@ public interface IUserManager : IServiceManager<UserGetDto, UserAddDto, UserUpda
     Task<ValidationResultHandler> SignupValidation(SignupDto _data);
     Task SignRegister(SignupDto dto);
     Task<ClaimsPrincipal> WhoIAm(string Token);
+    TokenDto RefreshToken(TokenDto tokenDto);
 }

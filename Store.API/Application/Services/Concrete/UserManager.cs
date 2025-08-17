@@ -131,7 +131,21 @@ public class UserManager : ServiceManager<UserGetDto, UserAddDto, UserUpdateDto,
         _logger.SerilogInformation("A new user has registered.");
         await _userRepository.Add(user);
     }
-
+    public TokenDto RefreshToken(TokenDto tokenDto)
+    {
+        if (tokenDto.RefreshTimeResult >= DateTime.Now)
+        {
+            string token = new JwtSecurityTokenHandler().WriteToken(JwtCreate(tokenDto.User));
+            return new TokenDto
+            {
+                isAuthentication = true,
+                RefreshTimeResult = tokenDto.RefreshTimeResult,
+                User = tokenDto.User,
+                Token = token
+            };
+        }
+        else throw new NonRefreshToken();
+    }
     public async Task<ClaimsPrincipal> WhoIAm(string Token)
     {
         var dataDictionary = _config.GetSection("JwtAuthentication");
