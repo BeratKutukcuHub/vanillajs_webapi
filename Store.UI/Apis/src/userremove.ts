@@ -1,5 +1,5 @@
 import { LocalStoreInformations } from "./api.js";
-import { StatusErrorHandler } from "./statuserrorhandler.js";
+import { StatusHandler } from "./statushandler.js";
 
 export const UserRemoveById = async (Id : number) : Promise<string> => {
     const localTokenAndClaims = LocalStoreInformations();
@@ -8,12 +8,12 @@ export const UserRemoveById = async (Id : number) : Promise<string> => {
         {
             method : "DELETE",
             headers : {
-                "Authorization": LocalStoreInformations().Token,
+                "Authorization": LocalStoreInformations().token,
                 "Content-type" : "application/json"
             },
         }
         );
-        const message = await StatusErrorHandler<string>(UserRemoveById,[Id],fetchDeleteUser,0);
+        const message = await StatusHandler<string>(fetchDeleteUser,UserRemoveById,false,Id);
         if(message) return message;
         throw new Error("Error : this delete request is wrong");
     }

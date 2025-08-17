@@ -8,18 +8,18 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 import { LocalStoreInformations } from "./api.js";
-import { StatusErrorHandler } from "./statuserrorhandler.js";
+import { StatusHandler } from "./statushandler.js";
 export const UserRemoveById = (Id) => __awaiter(void 0, void 0, void 0, function* () {
     const localTokenAndClaims = LocalStoreInformations();
     if (localTokenAndClaims.isOk) {
         const fetchDeleteUser = yield fetch(`https://localhost:7230/User/${Id}`, {
             method: "DELETE",
             headers: {
-                "Authorization": LocalStoreInformations().Token,
+                "Authorization": LocalStoreInformations().token,
                 "Content-type": "application/json"
             },
         });
-        const message = yield StatusErrorHandler(UserRemoveById, [Id], fetchDeleteUser, 0);
+        const message = yield StatusHandler(fetchDeleteUser, UserRemoveById, false, Id);
         if (message)
             return message;
         throw new Error("Error : this delete request is wrong");

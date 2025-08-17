@@ -8,19 +8,19 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 import { LocalStoreInformations } from "./api.js";
-import { StatusErrorHandler } from "./statuserrorhandler.js";
+import { StatusHandler } from "./statushandler.js";
 export const UserUpdate = (UpdateUser) => __awaiter(void 0, void 0, void 0, function* () {
     const localInformation = LocalStoreInformations();
     if (localInformation.isOk) {
         const updateUser = yield fetch(`https://localhost:7230/User`, {
             method: "PUT",
             headers: {
-                "Authorization": LocalStoreInformations().Token,
+                "Authorization": LocalStoreInformations().token,
                 "Content-type": "application/json"
             },
             body: JSON.stringify(UpdateUser)
         });
-        const response = yield StatusErrorHandler(UserUpdate, [UpdateUser], updateUser, 0);
+        const response = yield StatusHandler(updateUser, UserUpdate, false, updateUser);
         return response ? response : "";
     }
     return "Error Message : The informations is wrong";

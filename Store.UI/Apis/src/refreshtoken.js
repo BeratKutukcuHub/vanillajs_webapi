@@ -15,9 +15,9 @@ export const RefreshToken = () => __awaiter(void 0, void 0, void 0, function* ()
         return null;
     const refresh = yield fetch(`https://localhost:7230/Auth/Refresh`, {
         method: "POST",
-        body: JSON.stringify(localInfos.User),
+        body: JSON.stringify({ id: localInfos.id, refreshToken: localInfos.refreshToken }),
         headers: {
-            "Authorization": LocalStoreInformations().Token,
+            "Authorization": LocalStoreInformations().token,
             "Content-type": "application/json"
         }
     });
@@ -25,8 +25,9 @@ export const RefreshToken = () => __awaiter(void 0, void 0, void 0, function* ()
         return null;
     const newlyToken = yield refresh.json();
     localStorage.setItem("Token", JSON.stringify({
+        id: localInfos.id,
         token: newlyToken.token,
-        refreshToken: (_a = newlyToken.refreshToken) !== null && _a !== void 0 ? _a : localInfos.Token
+        refreshToken: (_a = newlyToken.refreshToken) !== null && _a !== void 0 ? _a : localInfos.refreshToken
     }));
-    return `Bearer ${newlyToken.token}`;
+    return `${newlyToken.token}`;
 });

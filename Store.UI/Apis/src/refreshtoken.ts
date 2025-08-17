@@ -6,9 +6,9 @@ export const RefreshToken = async () => {
 
     const refresh = await fetch(`https://localhost:7230/Auth/Refresh`, {
         method: "POST",
-        body: JSON.stringify(localInfos.User),
+        body: JSON.stringify({id:localInfos.id,refreshToken:localInfos.refreshToken}),
         headers: {
-            "Authorization": LocalStoreInformations().Token,
+            "Authorization": LocalStoreInformations().token,
             "Content-type": "application/json"
         }
     });
@@ -17,9 +17,10 @@ export const RefreshToken = async () => {
 
     const newlyToken = await refresh.json();
     localStorage.setItem("Token", JSON.stringify({
+        id : localInfos.id,
         token: newlyToken.token,
-        refreshToken: newlyToken.refreshToken ?? localInfos.Token
+        refreshToken: newlyToken.refreshToken ?? localInfos.refreshToken
     }));
 
-    return `Bearer ${newlyToken.token}`;
+    return `${newlyToken.token}`;
 }

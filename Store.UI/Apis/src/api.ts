@@ -10,31 +10,37 @@ export interface Response {
     User : User,
     isFullFilled : boolean
 }
-export interface LocalStoreResponse {
-    User : User, 
-    Token : any,
+export interface ResponseSigninTokenDto {
+    token : string,
+    refreshToken : Date
+};
+export interface LocalStoreResponse extends ResponseSigninTokenDto , RefreshToken {
+    User : User,
     isOk : boolean
 }
-export interface ResponseSigninTokenDto {
-    isOk : boolean,
-    token : string,
-    refreshToken : string
-};
+export interface RefreshToken {
+    id : number,
+}
 
 export const LocalStoreInformations = (): LocalStoreResponse => {
     const user = localStorage.getItem("User");
     const token = localStorage.getItem("Token");
     if (user && token) {
-    const userObj = JSON.parse(user);
+    const userObj : User = JSON.parse(user);
+    const tokenDetail : ResponseSigninTokenDto = JSON.parse(token);
     return {
         User: userObj,
-        Token: `Bearer ${token}`,
-        isOk: true,
+        token: `${tokenDetail.token}`,
+        refreshToken : tokenDetail.refreshToken,
+        isOk : true,
+        id : userObj.id
         };
     }
     return {
-        isOk: false,
-        Token: "",
+        id : -1,
+        isOk : false,
+        token: "Error",
+        refreshToken : new Date(),
         User: {} as User
     };
 };

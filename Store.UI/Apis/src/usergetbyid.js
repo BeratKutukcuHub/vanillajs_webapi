@@ -8,7 +8,7 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 import { LocalStoreInformations } from "./api.js";
-import { StatusErrorHandler } from "./statuserrorhandler.js";
+import { StatusHandler } from "./statushandler.js";
 export const GetUserById = (Id) => __awaiter(void 0, void 0, void 0, function* () {
     const localInformations = LocalStoreInformations();
     if (localInformations.isOk) {
@@ -16,10 +16,10 @@ export const GetUserById = (Id) => __awaiter(void 0, void 0, void 0, function* (
             method: "GET",
             headers: {
                 "Content-type": "application/json",
-                "Authorization": LocalStoreInformations().Token,
+                "Authorization": LocalStoreInformations().token,
             }
         });
-        const responseUser = yield StatusErrorHandler(GetUserById, [Id], getUserInformation, 0);
+        const responseUser = yield StatusHandler(getUserInformation, GetUserById, false, Id);
         if (responseUser) {
             return responseUser;
         }

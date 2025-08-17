@@ -64,10 +64,7 @@ const Seed = async () => {
         console.error("Login failed");
         return;
     }
-
     const response = await GetUserById(5);
-    console.log("GetUserById response:", response);
+    console.log(response);
 };
-for(let index = 0; index <= 1; index++){
     Seed();
-}

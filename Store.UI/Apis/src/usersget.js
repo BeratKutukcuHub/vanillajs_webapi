@@ -8,7 +8,7 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 import { LocalStoreInformations } from "./api.js";
-import { StatusErrorHandler } from "./statuserrorhandler.js";
+import { StatusHandler } from "./statushandler.js";
 export const GetUsersByPagination = (...args_1) => __awaiter(void 0, [...args_1], void 0, function* (pageNumber = 0, pageSize = 20) {
     const localStoreInfos = LocalStoreInformations();
     if (!localStoreInfos.isOk) {
@@ -17,11 +17,11 @@ export const GetUsersByPagination = (...args_1) => __awaiter(void 0, [...args_1]
     const users = yield fetch(`https://localhost:7230/User?PageNumber=${pageNumber}&PageSize=${pageSize}`, {
         method: "GET",
         headers: {
-            "Authorization": LocalStoreInformations().Token,
+            "Authorization": LocalStoreInformations().token,
             "Content-type": "application/json"
         }
     });
-    const response = yield StatusErrorHandler(GetUsersByPagination, [pageNumber, pageSize], users, 0);
+    const response = yield StatusHandler(users, GetUsersByPagination, false, pageNumber, pageSize);
     if (response)
         return response;
 });

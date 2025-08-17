@@ -1,5 +1,5 @@
 import { LocalStoreInformations , UpdateUser} from "./api.js";
-import { StatusErrorHandler } from "./statuserrorhandler.js";
+import { StatusHandler } from "./statushandler.js";
 
 export const UserUpdate = async (UpdateUser : UpdateUser) : Promise<string> => {
     const localInformation = LocalStoreInformations();
@@ -8,13 +8,13 @@ export const UserUpdate = async (UpdateUser : UpdateUser) : Promise<string> => {
         {
             method : "PUT",
             headers : {
-                "Authorization": LocalStoreInformations().Token,
+                "Authorization": LocalStoreInformations().token,
                 "Content-type" : "application/json"
             },
             body : JSON.stringify(UpdateUser)
         }
         );
-        const response = await StatusErrorHandler<string>(UserUpdate,[UpdateUser],updateUser,0);
+        const response = await StatusHandler<string>(updateUser,UserUpdate,false,updateUser);
         return response? response : "";
     }
     return "Error Message : The informations is wrong";

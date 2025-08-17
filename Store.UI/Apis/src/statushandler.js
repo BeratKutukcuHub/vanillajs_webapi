@@ -8,29 +8,29 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 import { RefreshToken } from "./refreshtoken.js";
-export const StatusErrorHandler = (theMethod_1, args_1, response_1, ...args_2) => __awaiter(void 0, [theMethod_1, args_1, response_1, ...args_2], void 0, function* (theMethod, args, response, _retry = 0) {
-    if (response.status === 401 && _retry < 1) {
-        const newToken = yield RefreshToken();
-        if (!newToken)
-            throw new Error("Refresh failed");
-        const newResponse = yield theMethod(...args);
-        return StatusErrorHandler(theMethod, args, newResponse, _retry + 1);
+export const StatusHandler = (status_1, method_1, ...args_1) => __awaiter(void 0, [status_1, method_1, ...args_1], void 0, function* (status, method, _isChecked = false, ...args) {
+    if (status.status == 401 && _isChecked == false) {
+        _isChecked = true;
+        yield RefreshToken();
+        method(...args);
     }
-    else if (response.status === 408) {
+    else if (status.status == 408) {
         localStorage.clear();
         window.location.href = "http://127.0.0.1:5500/Store.UI/index.html";
         return;
     }
-    else if (!response.ok) {
+    else if (!status.ok) {
         try {
-            const errorJson = yield response.json();
-            console.error(`The request is wrong:`, errorJson);
+            const response = yield status.json();
+            console.error(response);
+            return;
         }
         catch (_a) {
-            console.error("The request is wrong and response is not JSON");
+            const response = yield status.text();
+            console.error(response);
+            return;
         }
-        return;
     }
-    const requestofResponse = yield response.json();
-    return requestofResponse;
+    const result = yield status.json();
+    return result;
 });

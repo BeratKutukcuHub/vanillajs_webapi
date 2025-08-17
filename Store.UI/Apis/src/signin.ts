@@ -10,7 +10,6 @@ export const Signin = async (Signin: ISignin): Promise<any> => {
     });
     if (!response.ok) throw new Error("Signin failed");
     const result: ResponseSigninTokenDto = await response.json();
-    
     if (!result.token) {
     throw new Error("Signin failed: no token received");
     }
@@ -18,20 +17,22 @@ export const Signin = async (Signin: ISignin): Promise<any> => {
     token: `Bearer ${result.token}`,
     refreshToken: result.refreshToken
 }));
-
-const userResponse = await fetch("https://localhost:7230/User/Me", {
+const values = localStorage.getItem("Token");
+if(values){
+    const parsed : ResponseSigninTokenDto = JSON.parse(values);
+    const userResponse = await fetch("https://localhost:7230/Auth/Me", {
     method : "GET",
     headers: { 
-        "Authorization": LocalStoreInformations().Token,
-         "Content-Type": "application/json" 
+        "Authorization": parsed.token,
+        "Content-Type": "application/json" 
     }
-});
-const user: User = await userResponse.json();
-localStorage.setItem("User", JSON.stringify(user));
+    });
+    const user: User = await userResponse.json();
+    localStorage.setItem("User", JSON.stringify(user));
 
-return {
+    return {
     User: user,
     Token: result.token,
     isOk: true
-};
-};
+    };
+}};

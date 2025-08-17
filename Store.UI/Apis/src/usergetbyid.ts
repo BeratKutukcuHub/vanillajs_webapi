@@ -1,5 +1,5 @@
 import { LocalStoreInformations, User } from "./api.js";
-import { StatusErrorHandler } from "./statuserrorhandler.js";
+import { StatusHandler } from "./statushandler.js";
 
 
 export const GetUserById = async (Id : number) : Promise<User> => {
@@ -10,11 +10,11 @@ export const GetUserById = async (Id : number) : Promise<User> => {
                 method : "GET",
                 headers : {
                     "Content-type" : "application/json",
-                    "Authorization": LocalStoreInformations().Token,
+                    "Authorization": LocalStoreInformations().token,
                 }
             }
         );
-        const responseUser = await StatusErrorHandler<User>(GetUserById,[Id],getUserInformation, 0);
+        const responseUser = await StatusHandler<User>(getUserInformation,GetUserById,false,Id);
         if(responseUser){
             return responseUser;
         }

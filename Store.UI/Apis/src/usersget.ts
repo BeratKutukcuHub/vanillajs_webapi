@@ -1,5 +1,5 @@
 import { LocalStoreInformations, User } from "./api.js";
-import { StatusErrorHandler } from "./statuserrorhandler.js";
+import { StatusHandler } from "./statushandler.js";
 
 export const GetUsersByPagination = async (pageNumber : number = 0, pageSize : number = 20)  => {
     const localStoreInfos = LocalStoreInformations();
@@ -10,13 +10,12 @@ export const GetUsersByPagination = async (pageNumber : number = 0, pageSize : n
         {
             method : "GET",
             headers : {
-                "Authorization": LocalStoreInformations().Token,
+                "Authorization": LocalStoreInformations().token,
                 "Content-type" : "application/json"
             }
         }
     )
-    const response = await StatusErrorHandler<User[]>(GetUsersByPagination,
-        [pageNumber,pageSize],users,0);   
+    const response = await StatusHandler<User[]>(users,GetUsersByPagination,false,pageNumber,pageSize);   
     if(response)
     return response;
 }

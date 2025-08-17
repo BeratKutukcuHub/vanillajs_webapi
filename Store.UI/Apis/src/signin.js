@@ -7,7 +7,6 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
         step((generator = generator.apply(thisArg, _arguments || [])).next());
     });
 };
-import { LocalStoreInformations } from "./api.js";
 export const Signin = (Signin) => __awaiter(void 0, void 0, void 0, function* () {
     const response = yield fetch("https://localhost:7230/Auth/Signin", {
         method: "POST",
@@ -24,18 +23,22 @@ export const Signin = (Signin) => __awaiter(void 0, void 0, void 0, function* ()
         token: `Bearer ${result.token}`,
         refreshToken: result.refreshToken
     }));
-    const userResponse = yield fetch("https://localhost:7230/User/Me", {
-        method: "GET",
-        headers: {
-            "Authorization": LocalStoreInformations().Token,
-            "Content-Type": "application/json"
-        }
-    });
-    const user = yield userResponse.json();
-    localStorage.setItem("User", JSON.stringify(user));
-    return {
-        User: user,
-        Token: result.token,
-        isOk: true
-    };
+    const values = localStorage.getItem("Token");
+    if (values) {
+        const parsed = JSON.parse(values);
+        const userResponse = yield fetch("https://localhost:7230/Auth/Me", {
+            method: "GET",
+            headers: {
+                "Authorization": parsed.token,
+                "Content-Type": "application/json"
+            }
+        });
+        const user = yield userResponse.json();
+        localStorage.setItem("User", JSON.stringify(user));
+        return {
+            User: user,
+            Token: result.token,
+            isOk: true
+        };
+    }
 });
