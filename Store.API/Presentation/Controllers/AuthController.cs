@@ -53,7 +53,6 @@ public class AuthController : ControllerBase
         return Ok(userPrinciple);
     }
     [HttpPost("Refresh")]
-    [Authorize(Roles = "User")]
     public async Task<IActionResult> RefreshTokenAsync(RefreshTokenDto tokenDto)
     {
         var refresh = await _userManager.RefreshTokenAsync(tokenDto);

@@ -12,7 +12,7 @@ import { StatusHandler } from "./statushandler.js";
 export const GetUsersByPagination = (...args_1) => __awaiter(void 0, [...args_1], void 0, function* (pageNumber = 0, pageSize = 20) {
     const localStoreInfos = LocalStoreInformations();
     if (!localStoreInfos.isOk) {
-        return localStoreInfos;
+        throw new Error("The request is failed");
     }
     const users = yield fetch(`https://localhost:7230/User?PageNumber=${pageNumber}&PageSize=${pageSize}`, {
         method: "GET",
@@ -22,6 +22,13 @@ export const GetUsersByPagination = (...args_1) => __awaiter(void 0, [...args_1]
         }
     });
     const response = yield StatusHandler(users, GetUsersByPagination, false, pageNumber, pageSize);
-    if (response)
-        return response;
+    const paginationInformation = users.headers.get("x-pagination");
+    if (response && paginationInformation) {
+        const headerInformation = JSON.parse(paginationInformation);
+        return {
+            Users: response,
+            Header: headerInformation
+        };
+    }
+    throw new Error("The response is failed");
 });

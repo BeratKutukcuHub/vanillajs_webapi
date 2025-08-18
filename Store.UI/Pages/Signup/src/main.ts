@@ -1,3 +1,5 @@
+import { SignupModel } from "../../../Apis/src/api";
+
 export const Signup = () => {
     return ` <section class="signup_container">
         <div class="signup_top">
@@ -42,15 +44,7 @@ export const Signup = () => {
     </section>`
 }
 
-interface SignupModel {
-  userName: string,
-  firstName: string,
-  lastName: string,
-  age: number,
-  password : string,
-  email : string,
-  roles : string[]
-}
+
 
 
 const signup_input : NodeListOf<HTMLInputElement> = 

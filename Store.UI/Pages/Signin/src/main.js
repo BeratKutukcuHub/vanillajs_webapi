@@ -7,7 +7,8 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
         step((generator = generator.apply(thisArg, _arguments || [])).next());
     });
 };
-export const Signin = () => {
+import { Signin } from "../../../Apis/src/signin.js";
+export const SigninPage = () => {
     return `
     <main class="section_base">
     <section class="section">
@@ -31,7 +32,7 @@ export const Signin = () => {
     </main>`;
 };
 const errorMessage = document.createElement("h4");
-const user_ControllerDomElement = () => {
+const SigninErrorMessage = () => {
     let user_controller = document.getElementById("user_controller");
     const check = user_controller === null || user_controller === void 0 ? void 0 : user_controller.getElementsByTagName("h4");
     if ((check === null || check === void 0 ? void 0 : check.length) == 0) {
@@ -46,8 +47,8 @@ const user_ControllerDomElement = () => {
         errorMessageClassList: errorMessageClassList
     };
 };
-const domElement = () => {
-    const { user_controller } = user_ControllerDomElement();
+const SigninDomElement = () => {
+    const { user_controller } = SigninErrorMessage();
     const apply = document.getElementById("user_button");
     let userSigninValues = document.getElementsByTagName("input");
     return {
@@ -57,7 +58,7 @@ const domElement = () => {
     };
 };
 const userInfosErrorHandler = () => {
-    const { errorMessageClassList } = user_ControllerDomElement();
+    const { errorMessageClassList } = SigninErrorMessage();
     errorMessageClassList.remove("isNonError");
     errorMessageClassList.add("isError");
     setTimeout(() => {
@@ -65,28 +66,43 @@ const userInfosErrorHandler = () => {
         errorMessageClassList.add("isNonError");
     }, 2000);
 };
-const signinInput = () => {
-    const { userSigninValues } = domElement();
+const SigninInputs = () => {
+    const { userSigninValues } = SigninDomElement();
     let signUser = { userName: "", password: "" };
     Array.from(userSigninValues).forEach((item, index) => {
         signUser = Object.assign(Object.assign({}, signUser), { [item.name]: item.value });
     });
     return signUser;
 };
-export const signInFetchUser = () => {
-    const { user_controller } = domElement();
+export const SigninController = () => __awaiter(void 0, void 0, void 0, function* () {
     const apply = document.getElementById("user_button");
     if (!apply)
         return;
     apply.addEventListener("click", (clickEvent) => __awaiter(void 0, void 0, void 0, function* () {
         clickEvent.preventDefault();
-        console.log(signinInput());
+        const response = yield Signin(SigninInputs());
+        if (!response)
+            throw new Error("Sign in responsed the error");
+        else {
+            window.location.href = "http://127.0.0.1:5500/Store.UI/index.html";
+            return;
+        }
+    }));
+});
+const OldSignInFetchUser = () => {
+    const { user_controller } = SigninDomElement();
+    const apply = document.getElementById("user_button");
+    if (!apply)
+        return;
+    apply.addEventListener("click", (clickEvent) => __awaiter(void 0, void 0, void 0, function* () {
+        clickEvent.preventDefault();
+        console.log(SigninInputs());
         let signin = yield fetch("https://localhost:7230/Auth/Signin", {
             method: "POST",
             headers: {
                 "Content-Type": "application/json"
             },
-            body: JSON.stringify(signinInput())
+            body: JSON.stringify(SigninInputs())
         });
         const data = yield signin.json();
         if (!signin.ok) {
@@ -108,8 +124,6 @@ export const signInFetchUser = () => {
             userInfosErrorHandler();
             return;
         }
-        const meInfo = yield meAndToken.json();
-        localStorage.setItem("User", JSON.stringify(meInfo));
         window.location.href = "http://127.0.0.1:5500/Store.UI/index.html";
     }));
 };

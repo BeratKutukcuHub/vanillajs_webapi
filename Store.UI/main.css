@@ -4,13 +4,14 @@
     padding: 0;
 }
 ._app{
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
     min-height: auto;
     min-width: 100%;
 }
 .container{
-    min-height: auto;
+    min-height: 100vh;
     max-width: 100%;
-    display: flex;
-    justify-content: center;
-    align-items: center;
+    
 }

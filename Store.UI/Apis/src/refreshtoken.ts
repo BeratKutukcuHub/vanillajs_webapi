@@ -1,4 +1,4 @@
-import { LocalStoreInformations } from "./api.js";
+import { LocalStoreInformations, RefreshTokenAndNewlyToken } from "./api.js";
 
 export const RefreshToken = async () => {
     const localInfos = LocalStoreInformations();
@@ -12,14 +12,15 @@ export const RefreshToken = async () => {
             "Content-type": "application/json"
         }
     });
-
     if(!refresh.ok) return null;
 
-    const newlyToken = await refresh.json();
+    const newlyToken : RefreshTokenAndNewlyToken = await refresh.json();
+    console.log(newlyToken);
+    localStorage.removeItem("Token");
     localStorage.setItem("Token", JSON.stringify({
         id : localInfos.id,
-        token: newlyToken.token,
-        refreshToken: newlyToken.refreshToken ?? localInfos.refreshToken
+        token: `Bearer ${newlyToken.token}`,
+        refreshToken: newlyToken.refreshToken
     }));
 
     return `${newlyToken.token}`;

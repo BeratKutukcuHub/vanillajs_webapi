@@ -1,6 +1,7 @@
-import { ISignin, User } from "../../../Apis/src/api";
+import { ISignin, User } from "../../../Apis/src/api.js";
+import { Signin } from "../../../Apis/src/signin.js";
 
-export const Signin = () => {
+export const SigninPage = () => {
     return `
     <main class="section_base">
     <section class="section">
@@ -29,7 +30,7 @@ export const Signin = () => {
 
 
 const errorMessage = document.createElement("h4");
-const user_ControllerDomElement = () => {
+const SigninErrorMessage = () => {
     let user_controller = document.getElementById("user_controller");
     const check = user_controller?.getElementsByTagName("h4");
     if(check?.length == 0)
@@ -45,8 +46,8 @@ const user_ControllerDomElement = () => {
         errorMessageClassList : errorMessageClassList
     }
 }
-const domElement = () => {
-    const {user_controller} = user_ControllerDomElement();
+const SigninDomElement = () => {
+    const {user_controller} = SigninErrorMessage();
     const apply = document.getElementById("user_button");
     let userSigninValues: HTMLCollectionOf<HTMLInputElement> = document.getElementsByTagName("input");
     
@@ -57,7 +58,7 @@ const domElement = () => {
     }
 }
 const userInfosErrorHandler = () => {
-    const {errorMessageClassList} = user_ControllerDomElement();
+    const {errorMessageClassList} = SigninErrorMessage();
             errorMessageClassList.remove("isNonError");
             errorMessageClassList.add("isError");
         setTimeout(()=>{
@@ -66,8 +67,8 @@ const userInfosErrorHandler = () => {
         }, 2000)
 }
 
-const signinInput = () : ISignin => {
-    const {userSigninValues} = domElement();
+const SigninInputs = () : ISignin => {
+    const {userSigninValues} = SigninDomElement();
     let signUser : ISignin = { userName: "", password: "" };
     Array.from(userSigninValues).forEach((item : HTMLInputElement , index)=> {
         signUser = {
@@ -77,20 +78,38 @@ const signinInput = () : ISignin => {
     });
     return signUser;
 }
-export const signInFetchUser = () => {
-    const {user_controller} = domElement();
+export const SigninController = async () => {
+
+    const apply = document.getElementById("user_button");
+    if (!apply) return;
+
+    apply.addEventListener("click", async (clickEvent) => {
+        clickEvent.preventDefault();
+
+        const response = await Signin(SigninInputs());
+        if(!response)
+            throw new Error("Sign in responsed the error");
+        else {
+            window.location.href = "http://127.0.0.1:5500/Store.UI/index.html";
+            return;
+        }
+    });
+} 
+
+const OldSignInFetchUser = () => {
+    const {user_controller} = SigninDomElement();
     const apply = document.getElementById("user_button");
     if (!apply) return;
     apply.addEventListener("click", async (clickEvent) => {
         clickEvent.preventDefault();
-        console.log(signinInput());
+        console.log(SigninInputs());
 
         let signin = await fetch("https://localhost:7230/Auth/Signin", {
             method: "POST",
             headers: {
                 "Content-Type": "application/json"
             },
-            body: JSON.stringify(signinInput())
+            body: JSON.stringify(SigninInputs())
         });
 
         const data = await signin.json();
@@ -113,9 +132,6 @@ export const signInFetchUser = () => {
             userInfosErrorHandler();
             return;
         }
-        const meInfo: User = await meAndToken.json();
-        
-        localStorage.setItem("User", JSON.stringify(meInfo));
         window.location.href = "http://127.0.0.1:5500/Store.UI/index.html";
     });
 };

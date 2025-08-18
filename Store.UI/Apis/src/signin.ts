@@ -1,4 +1,4 @@
-import { ISignin, LocalStoreInformations, ResponseSigninTokenDto, User } from "./api.js";
+import { ISignin, ResponseSigninTokenDto, User } from "./api.js";
 
 
 

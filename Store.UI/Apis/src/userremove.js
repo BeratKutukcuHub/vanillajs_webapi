@@ -19,10 +19,7 @@ export const UserRemoveById = (Id) => __awaiter(void 0, void 0, void 0, function
                 "Content-type": "application/json"
             },
         });
-        const message = yield StatusHandler(fetchDeleteUser, UserRemoveById, false, Id);
-        if (message)
-            return message;
-        throw new Error("Error : this delete request is wrong");
+        yield StatusHandler(fetchDeleteUser, UserRemoveById, false, Id);
     }
     else
         throw new Error("Error : this delete request is wrong");

@@ -12,25 +12,22 @@ export const StatusHandler = (status_1, method_1, ...args_1) => __awaiter(void 0
     if (status.status == 401 && _isChecked == false) {
         _isChecked = true;
         yield RefreshToken();
-        method(...args);
+        yield method(...args);
     }
     else if (status.status == 408) {
         localStorage.clear();
         window.location.href = "http://127.0.0.1:5500/Store.UI/index.html";
         return;
     }
-    else if (!status.ok) {
-        try {
-            const response = yield status.json();
-            console.error(response);
-            return;
-        }
-        catch (_a) {
-            const response = yield status.text();
-            console.error(response);
-            return;
-        }
+    else if (!status.ok && _isChecked == false) {
+        _isChecked = true;
+        return;
     }
-    const result = yield status.json();
-    return result;
+    try {
+        const result = yield status.json();
+        return result;
+    }
+    catch (_a) {
+        return;
+    }
 });

@@ -63,15 +63,13 @@ a{
 .navbar_detail h1:hover{
     font-size: 1.4rem;
 }
-
-
 .footer{
     position: fixed;
     bottom: 0;
-    background-color: greenyellow;
+    background-color: rgb(44, 43, 43);
     width: 100%;
-    min-height: 90px;
-    max-height: 90px;
+    min-height: 75px;
+    max-height: 80px;
     align-items: center;
     display: flex;
     justify-content: center;
@@ -95,7 +93,7 @@ a{
 .footer_title {
     font-size: 1rem;
     font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
-    color: orange;
+    color: greenyellow;
 }
 .footer_item {
     display: flex;
@@ -105,7 +103,7 @@ a{
 }
 .footer_item hr{
     margin: 0px;
-    width: 50%;
+    width: 65%;
 }
 .footer_detail h1{
     color: gray;
@@ -117,5 +115,5 @@ a{
     cursor: pointer;
 }
 .footer_detail h1:hover{
-    color: black;
+    color: orange;
 }

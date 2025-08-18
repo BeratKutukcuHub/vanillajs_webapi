@@ -7,15 +7,6 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
         step((generator = generator.apply(thisArg, _arguments || [])).next());
     });
 };
-export const AdminPanel = () => {
-    return `
-    <main class="userlist_container">
-        <div class="userlist_cart_container">
-            
-        </div>
-        <div class="userlist_buttonGroup"></div>
-    </main>`;
-};
 export const FetchNewToken = () => __awaiter(void 0, void 0, void 0, function* () {
     const localUserInformation = LocalStoreUserInfo();
     if (localUserInformation.isFullFilled) {
@@ -257,13 +248,4 @@ const UserAndPagination = (User) => __awaiter(void 0, void 0, void 0, function* 
         }));
         userlist_cart_container.appendChild(userlist_cart);
     });
-});
-export const PaginationStarter = () => __awaiter(void 0, void 0, void 0, function* () {
-    const fetchUser = yield FetchUserGenerate();
-    if (fetchUser === null || fetchUser === void 0 ? void 0 : fetchUser.Header) {
-        HeaderAndPagination(fetchUser.Header);
-    }
-    if (fetchUser === null || fetchUser === void 0 ? void 0 : fetchUser.User) {
-        UserAndPagination(fetchUser.User);
-    }
 });

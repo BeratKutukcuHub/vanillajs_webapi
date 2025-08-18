@@ -1,14 +1,5 @@
 import { Header, PaginationResponse, UpdateUser, User } from "../../../Apis/src/api";
 
-export const AdminPanel = () => {
-    return `
-    <main class="userlist_container">
-        <div class="userlist_cart_container">
-            
-        </div>
-        <div class="userlist_buttonGroup"></div>
-    </main>`;
-}
 
 export const FetchNewToken = async () => {
     const localUserInformation = LocalStoreUserInfo();
@@ -266,12 +257,3 @@ const UserAndPagination = async (User : User[]) => {
     });
 }
 
-export const PaginationStarter = async () => {
-    const fetchUser = await FetchUserGenerate();
-    if (fetchUser?.Header) {
-            HeaderAndPagination(fetchUser.Header);
-    }
-    if (fetchUser?.User) {
-            UserAndPagination(fetchUser.User);
-    }
-}

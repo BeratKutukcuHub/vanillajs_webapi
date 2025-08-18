@@ -10,6 +10,10 @@ export interface Response {
     User : User,
     isFullFilled : boolean
 }
+export interface RefreshTokenAndNewlyToken {
+    token : string,
+    refreshToken : Date
+}
 export interface ResponseSigninTokenDto {
     token : string,
     refreshToken : Date
@@ -21,7 +25,15 @@ export interface LocalStoreResponse extends ResponseSigninTokenDto , RefreshToke
 export interface RefreshToken {
     id : number,
 }
-
+export interface SignupModel {
+  userName: string,
+  firstName: string,
+  lastName: string,
+  age: number,
+  password : string,
+  email : string,
+  roles : string[]
+}
 export const LocalStoreInformations = (): LocalStoreResponse => {
     const user = localStorage.getItem("User");
     const token = localStorage.getItem("Token");

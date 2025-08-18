@@ -9,7 +9,6 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 };
 import { LocalStoreInformations } from "./api.js";
 export const RefreshToken = () => __awaiter(void 0, void 0, void 0, function* () {
-    var _a;
     const localInfos = LocalStoreInformations();
     if (!localInfos.isOk)
         return null;
@@ -24,10 +23,12 @@ export const RefreshToken = () => __awaiter(void 0, void 0, void 0, function* ()
     if (!refresh.ok)
         return null;
     const newlyToken = yield refresh.json();
+    console.log(newlyToken);
+    localStorage.removeItem("Token");
     localStorage.setItem("Token", JSON.stringify({
         id: localInfos.id,
-        token: newlyToken.token,
-        refreshToken: (_a = newlyToken.refreshToken) !== null && _a !== void 0 ? _a : localInfos.refreshToken
+        token: `Bearer ${newlyToken.token}`,
+        refreshToken: newlyToken.refreshToken
     }));
     return `${newlyToken.token}`;
 });
