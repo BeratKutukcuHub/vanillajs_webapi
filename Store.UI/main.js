@@ -1,10 +1,10 @@
-import {Layout}  from "./Components/layout.js";
+import { Layout } from "./Components/layout.js";
 import { Home } from "./Pages/Home/src/main.js";
 import { HomeDom } from "./Pages/Home/src/main.js";
 import { SigninController, SigninPage }  from "./Pages/Signin/src/main.js";
-import { Signup } from "./Pages/Signup/src/main.js";
+import { SignupController, SignupPage } from "./Pages/Signup/src/main.js";
 import { Logout } from "./Components/header.js";
-import {AdminController, AdminPage } from "./Pages/Admin/src/admin.js"
+import { AdminController, AdminPage } from "./Pages/Admin/src/admin.js"
 
 function render(pageContent) {
   const layout = Layout(pageContent);
@@ -38,8 +38,8 @@ const router = async () => {
     SigninController();
   }
   else if(route === "#signup"){
-    render(Signup())
-    Signup_Event();
+    render(SignupPage())
+    SignupController();
   }
   else {
     render("<h1>404 - Sayfa Yok</h1>");

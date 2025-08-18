@@ -1,6 +1,7 @@
-import { SignupModel } from "../../../Apis/src/api";
+import { SignupModel } from "../../../Apis/src/api.js";
+import { Signup } from "../../../Apis/src/signup.js";
 
-export const Signup = () => {
+export const SignupPage = () => {
     return ` <section class="signup_container">
         <div class="signup_top">
             <h1 style="color: rgb(24, 24, 35); font-family: Verdana, Geneva, Tahoma, sans-serif; font-size: 1.3rem;
@@ -51,7 +52,26 @@ const signup_input : NodeListOf<HTMLInputElement> =
 document.getElementsByName("signup_input") as NodeListOf<HTMLInputElement>;
 const signup_button = document.getElementById("signup_button");
 
+export const SignupController = async () => {
+    const signup_inputs = document.getElementsByClassName("signup_input");
+    const signup_button = document.getElementById("signup_button");
+    let signupObj: SignupModel = {} as SignupModel;
 
+    
+    signup_button?.addEventListener("click", async (event)=> {
+            event.preventDefault();
+            Array.from(signup_inputs).forEach(input => {
+            const inputElement = input as HTMLInputElement;
+            console.log(inputElement);
+            signupObj = {
+             ...signupObj,
+            [inputElement.name] : inputElement.value
+            }; 
+        });
+            console.log(signupObj);
+            await Signup(signupObj);
+        })
+}
 export const Signup_Event = () => {
     if(!signup_button)return;
     signup_button?.addEventListener("click",(event : Event) => {

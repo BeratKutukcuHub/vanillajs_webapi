@@ -16,7 +16,7 @@ export const GetUserById = async (Id : number) : Promise<User> => {
         );
         const responseUser = await StatusHandler<User>(getUserInformation,GetUserById,false,Id);
         if(responseUser){
-            return responseUser;
+            return responseUser as User;
         }
         else throw new Error("The user is not found");
     }

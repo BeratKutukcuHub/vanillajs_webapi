@@ -7,7 +7,8 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
         step((generator = generator.apply(thisArg, _arguments || [])).next());
     });
 };
-export const Signup = () => {
+import { Signup } from "../../../Apis/src/signup.js";
+export const SignupPage = () => {
     return ` <section class="signup_container">
         <div class="signup_top">
             <h1 style="color: rgb(24, 24, 35); font-family: Verdana, Geneva, Tahoma, sans-serif; font-size: 1.3rem;
@@ -52,6 +53,21 @@ export const Signup = () => {
 };
 const signup_input = document.getElementsByName("signup_input");
 const signup_button = document.getElementById("signup_button");
+export const SignupController = () => __awaiter(void 0, void 0, void 0, function* () {
+    const signup_inputs = document.getElementsByClassName("signup_input");
+    const signup_button = document.getElementById("signup_button");
+    let signupObj = {};
+    signup_button === null || signup_button === void 0 ? void 0 : signup_button.addEventListener("click", (event) => __awaiter(void 0, void 0, void 0, function* () {
+        event.preventDefault();
+        Array.from(signup_inputs).forEach(input => {
+            const inputElement = input;
+            console.log(inputElement);
+            signupObj = Object.assign(Object.assign({}, signupObj), { [inputElement.name]: inputElement.value });
+        });
+        console.log(signupObj);
+        yield Signup(signupObj);
+    }));
+});
 export const Signup_Event = () => {
     if (!signup_button)
         return;

@@ -1,4 +1,4 @@
-import { SignupModel } from "./api"
+import { SignupModel } from "./api.js"
 
 export const Signup = async (Signup : SignupModel) => {
     const signup = await fetch("https://localhost:7230/Auth/Signup",

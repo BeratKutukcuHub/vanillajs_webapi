@@ -25,10 +25,6 @@ export const SigninPage = () => {
     </main>`;
 };
 
-
-
-
-
 const errorMessage = document.createElement("h4");
 const SigninErrorMessage = () => {
     let user_controller = document.getElementById("user_controller");

@@ -29,7 +29,7 @@ export const GetUsersByPagination = async (pageNumber : number = 0, pageSize : n
         const headerInformation : Header = JSON.parse(paginationInformation);
 
     return {
-        Users : response,
+        Users : response as User[],
         Header : headerInformation
     };
     }
