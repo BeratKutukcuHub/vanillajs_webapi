@@ -4,7 +4,8 @@ import { HomeDom } from "./Pages/Home/src/main.js";
 import { SigninController, SigninPage }  from "./Pages/Signin/src/main.js";
 import { SignupController, SignupPage } from "./Pages/Signup/src/main.js";
 import { Logout } from "./Components/header.js";
-import { AdminController, AdminPage } from "./Pages/Admin/src/admin.js"
+import { AdminController, AdminPage , UserDetailPage, UserDetailInformations } from "./Pages/Admin/src/admin.js"
+import { GetUserById } from "./Apis/src/usergetbyid.js";
 
 function render(pageContent) {
   const layout = Layout(pageContent);
@@ -23,7 +24,7 @@ function render(pageContent) {
 }
 const router = async () => {
   const route = window.location.hash;
-  console.log(window.location.href)
+
   if (window.location.href === "http://127.0.0.1:5500/Store.UI/index.html" 
     || window.location.href === "http:127.0.0.1:5500/Store.UI/") {
     render(Home());
@@ -35,11 +36,19 @@ const router = async () => {
   }
   else if(route === "#signin") {
     render(SigninPage());
-    SigninController();
+    await SigninController();
   }
   else if(route === "#signup"){
     render(SignupPage())
-    SignupController();
+    await SignupController();
+  }
+  else if(route.includes("#User/")){
+    const id = route.split("/")[1];
+    render(UserDetailPage());
+    const response = await GetUserById(parseInt(id));
+    if (response) {
+      UserDetailInformations(response); 
+    }
   }
   else {
     render("<h1>404 - Sayfa Yok</h1>");

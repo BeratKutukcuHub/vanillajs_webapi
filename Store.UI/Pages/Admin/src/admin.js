@@ -19,17 +19,61 @@ export const AdminPage = () => {
         <div class="userlist_buttonGroup"></div>
     </main>`;
 };
+export const UserDetailPage = () => {
+    return `
+    <div class="detail_container">
+        <div class="detail_item">
+            
+        </div>
+    </div>
+    `;
+};
 const UsersAndPaginationInformations = (...args_1) => __awaiter(void 0, [...args_1], void 0, function* (pageNumber = 0) {
     const page = yield GetUsersByPagination(pageNumber, 21);
     yield UserCartElement(page.Users);
     yield PaginationButtonGroup(page.Header.TotalPage, pageNumber == 0 ? 1 : pageNumber);
 });
+const UserDetail = () => __awaiter(void 0, void 0, void 0, function* () {
+    document.addEventListener("click", (event) => __awaiter(void 0, void 0, void 0, function* () {
+        const target = event.target;
+        const targetClass = target.classList;
+        if (targetClass.contains("userlist_cart")) {
+            const id = target.dataset.id;
+            if (id) {
+                window.location.hash = `#User/${id}`;
+            }
+        }
+    }));
+});
+export const UserDetailInformations = (User) => {
+    const detail_item = document.getElementsByClassName("detail_item")[0];
+    detail_item.innerHTML = `
+     <div class="detail_item_content">
+                <div class="detail_label">
+                    <label>Lorem ipsum dolor sit amet consectetur adipisicing elit. Obcaecati,
+                 corporis qui necessitatibus, maiores dignissimos
+                  voluptatum delectus, omnis corrupti
+                   vero totam atque eos distinctio.
+                    Aliquam fugiat enim, magni minus odio debitis!</label>
+        </div>
+    </div>
+    <div class="detail_item_content"><h4>Id *</h4> <h5>${User.id}</h5></div>
+    <div class="detail_item_content"><h4>Kullanıcı Adı  : </h4> <h5>${User.userName}</h5></div>
+    <div class="detail_item_content"><h4>İsmi : </h4> <h5>${User.firstName}</h5></div>
+    <div class="detail_item_content"><h4>Soyismi : </h4> <h5>${User.lastName}</h5></div>
+    <div class="detail_item_content"><h4>Ülkesi : </h4> <h5>${User.country}</h5></div>
+    <div class="detail_item_content"><h4>E-Mail Adres :  *</h4> <h5>${User.email}</h5></div>
+    <div class="detail_item_content"><h4>Roller : </h4> <h5>${User.roles.map((role => `${role}`))}</h5></div>
+    `;
+};
 const UserCartElement = (Users) => __awaiter(void 0, void 0, void 0, function* () {
     const userlist_cart_container = document.getElementsByClassName("userlist_cart_container")[0];
     userlist_cart_container.innerHTML = "";
     Users.forEach((user, index) => {
         const userlist_cart = document.createElement("div");
         userlist_cart.classList.add("userlist_cart");
+        userlist_cart.dataset.cartId = index.toString();
+        userlist_cart.dataset.id = user.id.toString();
         userlist_cart.innerHTML +=
             `
             <div class="userlist_content"><h4>Id : </h4> <h5>${user.id}</h5></div>
@@ -136,4 +180,5 @@ export const AdminController = () => __awaiter(void 0, void 0, void 0, function*
     yield UsersAndPaginationInformations();
     PaginationButtonEvent();
     CartButton();
+    UserDetail();
 });

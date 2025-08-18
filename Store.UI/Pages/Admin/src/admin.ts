@@ -1,4 +1,5 @@
-import { UpdateUser, User } from "../../../Apis/src/api";
+import { UpdateUser, User } from "../../../Apis/src/api.js";
+import { GetUserById } from "../../../Apis/src/usergetbyid.js";
 import { UserRemoveById } from "../../../Apis/src/userremove.js";
 import {GetUsersByPagination} from "../../../Apis/src/usersget.js";
 import { UserUpdate } from "../../../Apis/src/userupdate.js";
@@ -13,11 +14,58 @@ export const AdminPage = () => {
     </main>`;
 }
 
+export const UserDetailPage = () => {
+    return `
+    <div class="detail_container">
+        <div class="detail_item">
+            
+        </div>
+    </div>
+    `
+}
+
 const UsersAndPaginationInformations = async (pageNumber :number = 0) => {
     const page = await GetUsersByPagination(pageNumber,21);
     await UserCartElement(page.Users);
     await PaginationButtonGroup(page.Header.TotalPage,pageNumber == 0?1: pageNumber);
 }
+
+
+const UserDetail = async () => {
+    document.addEventListener("click",async (event)=> {
+        const target = event.target as HTMLElement;
+        const targetClass = target.classList;
+        if(targetClass.contains("userlist_cart")){
+            const id = target.dataset.id;
+            if(id){
+                window.location.hash = `#User/${id}`;
+            }
+        }
+    })
+}
+
+export const UserDetailInformations = (User : User) => {
+    const detail_item = document.getElementsByClassName("detail_item")[0];
+    detail_item.innerHTML = `
+     <div class="detail_item_content">
+                <div class="detail_label">
+                    <label>Lorem ipsum dolor sit amet consectetur adipisicing elit. Obcaecati,
+                 corporis qui necessitatibus, maiores dignissimos
+                  voluptatum delectus, omnis corrupti
+                   vero totam atque eos distinctio.
+                    Aliquam fugiat enim, magni minus odio debitis!</label>
+        </div>
+    </div>
+    <div class="detail_item_content"><h4>Id *</h4> <h5>${User.id}</h5></div>
+    <div class="detail_item_content"><h4>Kullanıcı Adı  : </h4> <h5>${User.userName}</h5></div>
+    <div class="detail_item_content"><h4>İsmi : </h4> <h5>${User.firstName}</h5></div>
+    <div class="detail_item_content"><h4>Soyismi : </h4> <h5>${User.lastName}</h5></div>
+    <div class="detail_item_content"><h4>Ülkesi : </h4> <h5>${User.country}</h5></div>
+    <div class="detail_item_content"><h4>E-Mail Adres :  *</h4> <h5>${User.email}</h5></div>
+    <div class="detail_item_content"><h4>Roller : </h4> <h5>${User.roles.map((role => `${role}`))}</h5></div>
+    `
+}
+
 
 const UserCartElement = async (Users : User[]) => {
     const userlist_cart_container = document.getElementsByClassName("userlist_cart_container")[0];
@@ -26,6 +74,8 @@ const UserCartElement = async (Users : User[]) => {
     {
         const userlist_cart = document.createElement("div");
         userlist_cart.classList.add("userlist_cart");
+        userlist_cart.dataset.cartId = index.toString();
+        userlist_cart.dataset.id = user.id.toString();
         userlist_cart.innerHTML += 
         `
             <div class="userlist_content"><h4>Id : </h4> <h5>${user.id}</h5></div>
@@ -39,7 +89,7 @@ const UserCartElement = async (Users : User[]) => {
                 <button class="update_button" data-cart-id=${index} data-id=${user.id}>Güncelle</button>
                 <button class="delete_button" data-cart-id=${index} data-id=${user.id}>Sil</button>
             </div>
-        ` 
+        `;
         userlist_cart_container.appendChild(userlist_cart);
     });
     
@@ -143,4 +193,5 @@ export const AdminController = async () => {
     await UsersAndPaginationInformations();
     PaginationButtonEvent();
     CartButton();
+    UserDetail();
 }
