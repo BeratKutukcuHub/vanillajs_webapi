@@ -110,17 +110,19 @@ const PaginationButtonEvent = () => {
         }
     }));
 };
-const RefreshListAndPage = () => __awaiter(void 0, void 0, void 0, function* () {
+const RefreshListAndPage = () => {
     const buttons = document.getElementsByClassName("userlist_button");
+    let pageNumber;
     Array.from(buttons).forEach((button) => __awaiter(void 0, void 0, void 0, function* () {
         const buttonType = button;
         const activeButton = buttonType.classList.contains("active");
         if (activeButton) {
-            console.log(buttonType.textContent);
-            yield UsersAndPaginationInformations(parseInt(buttonType.textContent));
+            pageNumber = parseInt(buttonType.innerText);
         }
     }));
-});
+    pageNumber = 0;
+    return pageNumber;
+};
 const CartButton = () => {
     document.addEventListener("click", (event) => __awaiter(void 0, void 0, void 0, function* () {
         const target = event.target;
@@ -135,7 +137,8 @@ const CartButton = () => {
             const id = target.dataset.id;
             if (id)
                 yield UserRemoveById(parseInt(id));
-            yield RefreshListAndPage();
+            const pageNumber = RefreshListAndPage();
+            yield UsersAndPaginationInformations(pageNumber);
         }
     }));
 };
@@ -160,11 +163,13 @@ const CartUpdateForm = (cartId, Id) => __awaiter(void 0, void 0, void 0, functio
                 <button class="close_button" data-cart-id=${cartId} data-id=${Id}>Kapat</button>
             </div>`;
     yield UserUpdateApply(Id, content);
-    content.getElementsByClassName("close_button")[0].addEventListener("click", () => content.innerHTML = oldContent);
+    content.getElementsByClassName("close_button")[0].addEventListener("click", (event) => {
+        event.preventDefault();
+        content.innerHTML = oldContent;
+    });
 });
 const UserUpdateApply = (Id, element) => __awaiter(void 0, void 0, void 0, function* () {
     const targetUpdateButton = element.getElementsByClassName("apply_button")[0];
-    console.log(targetUpdateButton);
     targetUpdateButton.addEventListener("click", () => __awaiter(void 0, void 0, void 0, function* () {
         let updateObj = { id: Id };
         const updateValues = document.getElementsByClassName("userlist_update_input");

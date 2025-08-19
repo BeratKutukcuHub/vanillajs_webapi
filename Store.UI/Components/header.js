@@ -6,6 +6,7 @@ export const Header = () => {
          style="color :rgb(242, 188, 89); ">
         Todo</a><a href="index.html" class="nav_logo" style="color :rgb(169, 226, 113);">App</a></nav>    
         <nav class="navbar_detail">
+            <div class="navbar_item"><h1><a href="#product">Ürünler</a></h1></div>
             <div class="navbar_item"><h1><a href="#signup">Kayıt Ol</a></h1></div>
             <div class="navbar_item"><h1><a href="#signin">Giriş Yap</a></h1></div>
         </nav>
@@ -18,6 +19,7 @@ export const Header = () => {
         Todo</a><a href="index.html" class="nav_logo" style="color :rgb(169, 226, 113);">App</a></nav>    
         <nav class="navbar_detail">
             <div class="navbar_item" id="userName"><h1></h1></div> 
+            <div class="navbar_item"><h1><a href="#product">Ürünler</a></h1></div>
             <div class="navbar_item"><h1><a href="#admin" id="admin">Admin Panel</a></h1></div>
             <div class="navbar_item"><h1><a class="logout" id="logout">Çıkış Yap</a></h1></div>
         </nav>

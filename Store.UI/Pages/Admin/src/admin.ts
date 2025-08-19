@@ -114,16 +114,18 @@ const PaginationButtonEvent = () => {
         }
     });
 }
-const RefreshListAndPage = async () => {
+const RefreshListAndPage = () : number => {
     const buttons = document.getElementsByClassName("userlist_button");
+    let pageNumber : number;
     Array.from(buttons).forEach(async (button) => {
-        const buttonType = button as Element; 
+        const buttonType = button as HTMLElement; 
         const activeButton = buttonType.classList.contains("active");
         if(activeButton){
-            console.log(buttonType.textContent);
-            await UsersAndPaginationInformations(parseInt(buttonType.textContent));
+            pageNumber =  parseInt(buttonType.innerText);
         }
-    })
+    });
+    pageNumber = 0;
+    return pageNumber;
 }
 const CartButton = () => {
     document.addEventListener("click",async (event)=> {
@@ -140,7 +142,8 @@ const CartButton = () => {
             const id = target.dataset.id;
             if(id)
             await UserRemoveById(parseInt(id));
-            await RefreshListAndPage();
+            const pageNumber =  RefreshListAndPage();
+            await UsersAndPaginationInformations(pageNumber);
         }
     })
 }
@@ -167,12 +170,14 @@ const CartUpdateForm = async (cartId : number ,Id : number) => {
                 <button class="close_button" data-cart-id=${cartId} data-id=${Id}>Kapat</button>
             </div>`;
     await UserUpdateApply(Id, content);
-    content.getElementsByClassName("close_button")[0].addEventListener("click",()=> content.innerHTML = oldContent);
+    content.getElementsByClassName("close_button")[0].addEventListener("click",(event)=>{
+        event.preventDefault();
+        content.innerHTML = oldContent;
+    } );
 }
 
 const UserUpdateApply = async (Id : number, element : Element) => {
     const targetUpdateButton = element.getElementsByClassName("apply_button")[0];
-    console.log(targetUpdateButton);
     targetUpdateButton.addEventListener("click", async () =>{
         let updateObj : UpdateUser = {id : Id}
         const updateValues = document.getElementsByClassName("userlist_update_input");

@@ -6,7 +6,7 @@ import { SignupController, SignupPage } from "./Pages/Signup/src/main.js";
 import { Logout } from "./Components/header.js";
 import { AdminController, AdminPage , UserDetailPage, UserDetailInformations } from "./Pages/Admin/src/admin.js"
 import { GetUserById } from "./Apis/src/usergetbyid.js";
-
+import {ProductController, ProductPage} from "./Pages/Product/src/product.js";
 function render(pageContent) {
   const layout = Layout(pageContent);
   const app = document.getElementById("app");
@@ -24,7 +24,6 @@ function render(pageContent) {
 }
 const router = async () => {
   const route = window.location.hash;
-
   if (window.location.href === "http://127.0.0.1:5500/Store.UI/index.html" 
     || window.location.href === "http:127.0.0.1:5500/Store.UI/") {
     render(Home());
@@ -42,6 +41,10 @@ const router = async () => {
     render(SignupPage())
     await SignupController();
   }
+  else if(route === "#product"){
+    render(ProductPage());
+    await ProductController();
+  }
   else if(route.includes("#User/")){
     const id = route.split("/")[1];
     render(UserDetailPage());
@@ -54,6 +57,7 @@ const router = async () => {
     render("<h1>404 - Sayfa Yok</h1>");
   }
 }
+
 window.addEventListener("hashchange", router);
 window.addEventListener("load", router);
 

@@ -44,7 +44,6 @@ export const HomeDom = () => {
         Array.from(cart_item).forEach((item, index) => {
             index == activeNumber ? item.classList.add("active") : item.classList.remove("active");
         });
-        console.log(cart_img.children.length);
         if (cart_img.children.length != 0) {
             cart_img.removeChild(img);
         }

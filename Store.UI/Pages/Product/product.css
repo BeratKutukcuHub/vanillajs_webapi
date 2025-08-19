@@ -1,0 +1,93 @@
+.product_base_container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+}
+.product_container {
+            width: 100%;
+            height: auto;
+            display: flex;
+            flex-direction: row;
+            gap: 15px;
+            flex-wrap: wrap;
+            justify-content: space-around;
+}
+.product_item {
+            max-width: 250px;
+            height: auto;
+            background-color: rgb(241, 240, 240);
+            box-shadow: 2px 2px 2px 2px rgba(135, 135, 135, 0.659);
+            display: flex;
+            flex-direction: column;
+            transition: all 0.6s ease;
+            padding: 5px;
+            border-radius: 10px;
+}
+.product_item:hover{
+            padding: 5px 10px;
+            box-shadow: 0px 0px 0px 8px rgba(188, 188, 188, 0.801);
+}
+.product_item_title{
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            gap: 5px;
+            text-align: center;
+            margin-bottom: 20px;
+}
+.product_item_title img{
+    width: 100%;
+    height: 180px;
+    border-radius: 5px;
+    box-shadow: 2px 2px 2px white;
+}
+.product_item_content{
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+}
+.product_item_content_title{
+    font-weight: 600;
+    font-style: normal;
+    font-variant: small-caps;
+    font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+}
+.product_item_description{
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            gap: 5px;
+            text-align: center;
+}
+.product_paginationGroup {
+    display: flex;
+    text-align: center;
+    justify-content: center;
+    gap: 5px;
+    margin-top: 50px;
+}
+
+.product_pagination{
+    
+    width: 25px;
+    height: 25px;
+    border-radius: 7px;
+    background-color: rgb(174, 165, 147);
+    color: rgb(53, 53, 53);
+    cursor: pointer;
+    transition: background-color 0.5s ease;
+    border: 0.3px solid greenyellow;
+}
+.product_pagination:hover{
+    background-color: rgb(187, 151, 85);
+}
+.product_pagination_active {
+    width: 25px;
+    height: 25px;
+    border-radius: 7px;
+    background-color: rgb(81, 81, 79);
+    color: rgb(255, 255, 255);
+    cursor: pointer;
+    transition: background-color 0.5s ease;
+    border: 0.3px solid greenyellow;
+}

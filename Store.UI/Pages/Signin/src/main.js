@@ -96,7 +96,6 @@ const OldSignInFetchUser = () => {
         return;
     apply.addEventListener("click", (clickEvent) => __awaiter(void 0, void 0, void 0, function* () {
         clickEvent.preventDefault();
-        console.log(SigninInputs());
         let signin = yield fetch("https://localhost:7230/Auth/Signin", {
             method: "POST",
             headers: {
@@ -106,7 +105,6 @@ const OldSignInFetchUser = () => {
         });
         const data = yield signin.json();
         if (!signin.ok) {
-            console.log(user_controller);
             userInfosErrorHandler();
             console.error(data);
             return;

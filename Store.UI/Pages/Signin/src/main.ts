@@ -98,7 +98,6 @@ const OldSignInFetchUser = () => {
     if (!apply) return;
     apply.addEventListener("click", async (clickEvent) => {
         clickEvent.preventDefault();
-        console.log(SigninInputs());
 
         let signin = await fetch("https://localhost:7230/Auth/Signin", {
             method: "POST",
@@ -110,7 +109,6 @@ const OldSignInFetchUser = () => {
 
         const data = await signin.json();
         if (!signin.ok) {
-            console.log(user_controller)
             userInfosErrorHandler();
             console.error(data);
             return;

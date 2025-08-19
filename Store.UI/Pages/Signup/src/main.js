@@ -61,10 +61,8 @@ export const SignupController = () => __awaiter(void 0, void 0, void 0, function
         event.preventDefault();
         Array.from(signup_inputs).forEach(input => {
             const inputElement = input;
-            console.log(inputElement);
             signupObj = Object.assign(Object.assign({}, signupObj), { [inputElement.name]: inputElement.value });
         });
-        console.log(signupObj);
         yield Signup(signupObj);
     }));
 });

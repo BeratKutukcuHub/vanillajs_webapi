@@ -62,13 +62,11 @@ export const SignupController = async () => {
             event.preventDefault();
             Array.from(signup_inputs).forEach(input => {
             const inputElement = input as HTMLInputElement;
-            console.log(inputElement);
             signupObj = {
              ...signupObj,
             [inputElement.name] : inputElement.value
             }; 
         });
-            console.log(signupObj);
             await Signup(signupObj);
         })
 }
