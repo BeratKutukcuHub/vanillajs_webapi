@@ -1,4 +1,5 @@
 import { UpdateUser, User } from "../../../Apis/src/api.js";
+import { UserCreate } from "../../../Apis/src/usercreate.js";
 import { GetUserById } from "../../../Apis/src/usergetbyid.js";
 import { UserRemoveById } from "../../../Apis/src/userremove.js";
 import {GetUsersByPagination} from "../../../Apis/src/usersget.js";
@@ -7,6 +8,7 @@ import { UserUpdate } from "../../../Apis/src/userupdate.js";
 export const AdminPage = () => {
     return `
     <main class="userlist_container">
+        <button class="userlist_container_createUser">+ EKLE</button>
         <div class="userlist_cart_container">
             
         </div>
@@ -24,12 +26,81 @@ export const UserDetailPage = () => {
     `
 }
 
+export const UserCreatePage = () => {
+    return `
+    <form class="usercreate_base_container">
+        <div class="usercreate_container">
+            <div class="usercreate_content">
+                <h5>Kullanıcı Adı</h5>
+                <input type="text" name="userName"> 
+            </div>
+            <div class="usercreate_content">
+                <h5>Kullanıcı İsmi</h5>
+                <input type="text" name="firstName"> 
+            </div>
+            <div class="usercreate_content">
+                <h5>Kullanıcı Soyismi</h5>
+                <input type="text" name="lastName"> 
+            </div>
+            <div class="usercreate_content">
+                <h5>Kullanıcı Şifresi</h5>
+                <input type="text" name="password"> 
+            </div>
+            <div class="usercreate_content">
+                <h5>Kullanıcı Email Bilgisi</h5>
+                <input type="text" name="email"> 
+            </div>
+            <div class="usercreate_content">
+                <h5>Kullanıcı Yaşı</h5>
+                <input type="number" max=99 min=17 name="age"> 
+            </div>
+            <div class="usercreate_content">
+                <input type="checkbox" name="role" value="admin" class="usercreate_content_checkbox">
+                <label>Admin</label>               
+            </div>
+        </div>
+        <div class="usercreate_buttongroup">
+            <button id="usercreate_apply" type="submit">Onayla</button>
+            <button id="usercreate_cancel">Geri Dön</button>
+        </div>
+    </form>
+    `
+}
+    
+export const UserCreateController = () => {
+    const usercreate_content = document.getElementsByClassName("usercreate_content");
+    const usercreate_apply = document.getElementById("usercreate_apply");
+    usercreate_apply?.addEventListener("click",async (event)=>{
+        event.preventDefault();
+        let userCreateDto : UserCreate = {} as UserCreate;
+        Array.from(usercreate_content).forEach((usercreate) => {
+        const usercreate_input = usercreate.getElementsByTagName("input")[0];
+        const {name , value} = usercreate_input;
+        const valueManipulation = value === "admin"? ["User"] : value;
+        userCreateDto = {
+            ...userCreateDto,
+            [name] : valueManipulation
+        };
+    });
+    await UserCreate(userCreateDto);
+    })
+}
+
+const UserCreateLocalication = () => {
+    // const userlist_container = document.getElementsByClassName("userlist_container")[0];
+    // const userlist_container_createUser = document.createElement("button");
+    // userlist_container_createUser.classList.add("userlist_container_createUser");
+    // userlist_container_createUser.textContent = "+ EKLE"
+    document.getElementsByClassName("userlist_container_createUser")[0].addEventListener("click",()=> {
+        window.location.hash = "#Admin/UserCreate";
+    });
+}
 const UsersAndPaginationInformations = async (pageNumber :number = 0) => {
+    UserCreateLocalication();
     const page = await GetUsersByPagination(pageNumber,21);
     await UserCartElement(page.Users);
     await PaginationButtonGroup(page.Header.TotalPage,pageNumber == 0?1: pageNumber);
 }
-
 
 const UserDetail = async () => {
     document.addEventListener("click",async (event)=> {

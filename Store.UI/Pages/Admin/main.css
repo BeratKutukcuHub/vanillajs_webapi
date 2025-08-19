@@ -17,6 +17,103 @@
             gap: 2%; 
             flex-wrap: wrap;
         }
+        .usercreate_base_container {
+            width: 100%;
+            height: auto;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+        }
+        .usercreate_buttongroup {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            width: 100%;
+        }
+        input[type="checkbox"] {
+        appearance: none;      
+        -webkit-appearance: none;
+        -moz-appearance: none;
+
+        width: 20px;
+        height: 20px;
+        border: 2px solid #555;
+        border-radius: 4px;
+        cursor: pointer;
+        position: relative;
+        }
+
+        input[type="checkbox"]:checked {
+          background-color: #4caf50;
+          border-color: #4caf50;
+        }
+
+        input[type="checkbox"]:checked::after {
+          content: "✔"; 
+          color: white;
+          font-size: 14px;
+          position: absolute;
+          left: 5px;
+          top: 0px;
+        }
+        .usercreate_buttongroup button{
+            border-radius: 8px;
+            padding: 8px;
+            border: none;
+            cursor: pointer;
+        }
+        .usercreate_container {
+            width: 80%;
+            margin: 5px 0px;
+            height: auto;
+            background-color: whitesmoke;
+            padding: 10px;
+            border-radius: 10px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 10px;
+            justify-content: center;
+        }
+        .usercreate_content {
+            width: 50%;
+            padding: 10px 0px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .usercreate_content h5{
+            font-family: Verdana, Geneva, Tahoma, sans-serif;
+        }
+        .usercreate_content input {
+            border: none;
+            box-shadow: 0px 0px 7px 1px rgba(0, 0, 0, 0.245) inset;
+            color: rgba(0, 0, 0, 0.495);
+            outline: none;
+            padding: 3px 5px;
+            font-size: 0.8rem;
+            text-align: center;
+            border-radius: 5px;
+            font-family: Verdana, Geneva, Tahoma, sans-serif;
+        }
+        .userlist_container_createUser {
+            width: 65px;
+            height: 35px;
+            background-color: rgb(32, 111, 32);
+            color: white;
+            font-size: 0.8rem;
+            font-family: Verdana, Geneva, Tahoma, sans-serif;
+            transition: all 0.5s ease;
+            cursor: pointer;
+            border-radius: 5px;
+            text-align: center;
+            margin: 15px 0px;
+        }
+        .userlist_container_createUser:hover{
+            padding: 2px;
+            box-shadow: 0px 0px 18px 2px rgb(80, 129, 72);
+        }
         .userlist_cart{
             cursor: pointer;
             border-radius: 10px;

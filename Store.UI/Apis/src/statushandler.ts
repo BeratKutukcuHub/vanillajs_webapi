@@ -16,16 +16,11 @@ export const StatusHandler = async <ResponseType> (status : Response,
         return;
     }
     else if(!status.ok && _isChecked == false){
+        console.log(await status.json())
         _isChecked = true;
         return;
     }
-    try{
-        const result : ResponseType = await status.json();
-        return result;
-    }
-    catch {
-        return;
-    }
+    return;
 }
 
 

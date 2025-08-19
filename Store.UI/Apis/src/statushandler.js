@@ -20,14 +20,9 @@ export const StatusHandler = (status_1, method_1, ...args_1) => __awaiter(void 0
         return;
     }
     else if (!status.ok && _isChecked == false) {
+        console.log(yield status.json());
         _isChecked = true;
         return;
     }
-    try {
-        const result = yield status.json();
-        return result;
-    }
-    catch (_a) {
-        return;
-    }
+    return;
 });

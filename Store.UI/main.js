@@ -4,7 +4,8 @@ import { HomeDom } from "./Pages/Home/src/main.js";
 import { SigninController, SigninPage }  from "./Pages/Signin/src/main.js";
 import { SignupController, SignupPage } from "./Pages/Signup/src/main.js";
 import { Logout } from "./Components/header.js";
-import { AdminController, AdminPage , UserDetailPage, UserDetailInformations } from "./Pages/Admin/src/admin.js"
+import { AdminController, AdminPage , UserDetailPage, UserDetailInformations, UserCreatePage, UserCreateController }
+ from "./Pages/Admin/src/admin.js"
 import { GetUserById } from "./Apis/src/usergetbyid.js";
 import {ProductController, ProductPage} from "./Pages/Product/src/product.js";
 function render(pageContent) {
@@ -44,6 +45,10 @@ const router = async () => {
   else if(route === "#product"){
     render(ProductPage());
     await ProductController();
+  }
+  else if(route === "#Admin/UserCreate"){
+    render(UserCreatePage());
+    UserCreateController()
   }
   else if(route.includes("#User/")){
     const id = route.split("/")[1];

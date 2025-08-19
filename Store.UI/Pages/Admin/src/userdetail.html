@@ -58,22 +58,54 @@
             font-size: 1.2rem;
             color: rgb(226, 226, 226);
         }
+
+        .usercreate_base_container {
+            width: 100%;
+            height: auto;
+            display: flex;
+            flex-direction: row;
+            justify-content: center;
+            align-items: center;
+            background-color: whitesmoke;
+        }
+        .usercreate_container {
+            width: 80%;
+            margin: 5px 0px;
+            height: auto;
+            box-shadow: 0px 0px 10px 2px white;
+            padding: 10px;
+            border-radius: 10px;
+            display: flex;
+            justify-content: center;
+        }
+        .usercreate_content {
+            width: 65%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .usercreate_content h5{
+            font-family: Verdana, Geneva, Tahoma, sans-serif;
+        }
+        .usercreate_content input {
+            border: none;
+            box-shadow: 0px 0px 7px 1px rgba(0, 0, 0, 0.245) inset;
+            color: rgba(0, 0, 0, 0.495);
+            outline: none;
+            padding: 3px 5px;
+            font-size: 0.8rem;
+            text-align: center;
+            border-radius: 5px;
+            font-family: Verdana, Geneva, Tahoma, sans-serif;
+        }
     </style>
 </head>
 <body>
-    <div class="detail_container">
-        <div class="detail_item">
-            <div class="detail_item_content">
-                <div class="detail_label">
-                    <label>Lorem ipsum dolor sit amet consectetur adipisicing elit. Obcaecati,
-                 corporis qui necessitatibus, maiores dignissimos
-                  voluptatum delectus, omnis corrupti
-                   vero totam atque eos distinctio.
-                    Aliquam fugiat enim, magni minus odio debitis!</label>
-                </div>
-            </div>
-            <div class="detail_item_content">
-                <h4>Kullanıcı Adı</h4> <h5>Berat Kütükçü</h5>
+    <div class="usercreate_base_container">
+        <div class="usercreate_container">
+            <div class="usercreate_content">
+                <h5>Kullanıcı Adı</h5>
+                <input type="text"> 
             </div>
         </div>
     </div>
